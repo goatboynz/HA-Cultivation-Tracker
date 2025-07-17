@@ -51,6 +51,17 @@
                 </div>
             </div>
 
+            <!-- Plant Count Reports -->
+            <div class="card">
+                <h3>📊 Plant Count Reports</h3>
+                <p><small>Export total plant counts for different time periods</small></p>
+                <div class="report-buttons">
+                    <button onclick="generatePlantCountReport('monthly')" class="button">Monthly Plant Counts</button>
+                    <button onclick="generatePlantCountReport('6month')" class="button">6-Month Plant Counts</button>
+                    <button onclick="generatePlantCountReport('yearly')" class="button">Yearly Plant Counts</button>
+                </div>
+            </div>
+
             <!-- Timeline Reports -->
             <div class="card">
                 <h3>Timeline Reports</h3>
@@ -135,6 +146,26 @@
                 .catch(error => {
                     console.error('Error:', error);
                     alert('Error generating report');
+                });
+        }
+
+        function generatePlantCountReport(period) {
+            currentReportType = `plant_count_${period}`;
+            
+            fetch(`generate_plant_count_report.php?period=${period}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                        return;
+                    }
+                    
+                    currentReportData = data.data;
+                    displayReport(data.title, data.headers, data.data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error generating plant count report');
                 });
         }
 

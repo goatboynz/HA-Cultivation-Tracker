@@ -15,81 +15,175 @@
     </header>
 
     <main class="container">
-        <h1>CultivationTracker Dashboard</h1>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+            <div>
+                <h1>🌿 Cultivation Dashboard</h1>
+                <p style="color: #94a3b8; margin: 0;">Welcome back! Here's your cultivation overview</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Last updated</p>
+                <p id="lastUpdated" style="margin: 0; font-weight: 600;">Loading...</p>
+            </div>
+        </div>
 
+        <!-- Plant Overview Cards -->
         <section>
-            <h2>Plant Overview</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Clone Stage</h3>
-                    <p id="cloneCount" class="stat-number">-</p>
-                    <small>Total clones</small>
+            <h2>🌱 Plant Overview</h2>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>🌿 Clone Stage</h3>
+                    <div class="stat-display">
+                        <div class="stat-number" id="cloneCount">-</div>
+                        <div class="stat-label">Active Clones</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="cloneProgress" style="width: 0%"></div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Vegetative Stage</h3>
-                    <p id="vegCount" class="stat-number">-</p>
-                    <small>Total veg plants</small>
+                <div class="dashboard-card">
+                    <h3>🌱 Vegetative Stage</h3>
+                    <div class="stat-display">
+                        <div class="stat-number" id="vegCount">-</div>
+                        <div class="stat-label">Veg Plants</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="vegProgress" style="width: 0%"></div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Flowering Stage</h3>
-                    <p id="flowerCount" class="stat-number">-</p>
-                    <small>Total flowering plants</small>
+                <div class="dashboard-card">
+                    <h3>🌸 Flowering Stage</h3>
+                    <div class="stat-display">
+                        <div class="stat-number" id="flowerCount">-</div>
+                        <div class="stat-label">Flowering Plants</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="flowerProgress" style="width: 0%"></div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Mother Plants</h3>
-                    <p id="motherCount" class="stat-number">-</p>
-                    <small>Active mothers</small>
+                <div class="dashboard-card">
+                    <h3>👑 Mother Plants</h3>
+                    <div class="stat-display">
+                        <div class="stat-number" id="motherCount">-</div>
+                        <div class="stat-label">Active Mothers</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="motherProgress" style="width: 0%"></div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Total Active</h3>
-                    <p id="totalCount" class="stat-number">-</p>
-                    <small>All growing plants</small>
+                <div class="dashboard-card" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+                    <h3>📊 Total Active</h3>
+                    <div class="stat-display">
+                        <div class="stat-number" id="totalCount" style="color: white;">-</div>
+                        <div class="stat-label" style="color: #d1fae5;">All Growing Plants</div>
+                    </div>
+                </div>
+                <div class="dashboard-card" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);">
+                    <h3>🏆 This Month</h3>
+                    <div class="stat-display">
+                        <div class="stat-number" id="harvestedCount" style="color: white;">-</div>
+                        <div class="stat-label" style="color: #ddd6fe;">Plants Harvested</div>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- Room Utilization -->
         <section>
-            <h2>Room Utilization</h2>
-            <div id="roomCards" class="grid">
+            <h2>🏠 Room Utilization</h2>
+            <div id="roomCards" class="dashboard-grid">
                 <!-- Room cards will be populated by JavaScript -->
             </div>
         </section>
 
+        <!-- Ready to Harvest -->
         <section>
-            <h2>Flowering Plants Ready Soon</h2>
-            <table id="readyToHarvestTable" class="table">
-                <thead>
-                    <tr>
-                        <th>Genetics</th>
-                        <th>Room</th>
-                        <th>Days in Flower</th>
-                        <th>Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <p id="noReadyPlantsMessage" style="display: none; text-align: center; font-style: italic;">No plants approaching harvest</p>
-        </section>
-
-        <section>
-            <h2>Recent Activity</h2>
-            <div id="recentActivity">
-                <p><em>Loading recent activity...</em></p>
+            <h2>⏰ Plants Ready Soon</h2>
+            <div class="dashboard-card">
+                <table id="readyToHarvestTable" style="width: 100%; margin: 0;">
+                    <thead>
+                        <tr>
+                            <th>Genetics</th>
+                            <th>Room</th>
+                            <th>Days in Flower</th>
+                            <th>Count</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <p id="noReadyPlantsMessage" style="display: none; text-align: center; font-style: italic; color: #94a3b8;">No plants approaching harvest</p>
             </div>
         </section>
 
+        <!-- Genetics Overview -->
         <section>
-            <h2>Quick Actions</h2>
-            <div class="grid">
-                <a href="receive_genetics.php" class="button">Add New Plants</a>
-                <a href="plants_clone.php" class="button secondary">Manage Clones</a>
-                <a href="plants_veg.php" class="button secondary">Manage Veg</a>
-                <a href="plants_flower.php" class="button secondary">Manage Flower</a>
+            <h2>🧬 Genetics Overview</h2>
+            <div id="geneticsOverview" class="dashboard-grid">
+                <!-- Genetics cards will be populated by JavaScript -->
             </div>
-            <div class="grid">
-                <a href="manage_rooms.php" class="button outline">Manage Rooms</a>
-                <a href="GETTING_STARTED_V12.md" class="button outline" target="_blank">Setup Guide</a>
+        </section>
+
+        <!-- Quick Actions -->
+        <section>
+            <h2>⚡ Quick Actions</h2>
+            <div class="quick-actions">
+                <a href="receive_genetics.php" class="quick-action">
+                    <span class="quick-action-icon">➕</span>
+                    <div>
+                        <div>Add New Plants</div>
+                        <small>Start new plants from seeds or clones</small>
+                    </div>
+                </a>
+                <a href="plants_clone.php" class="quick-action">
+                    <span class="quick-action-icon">🌿</span>
+                    <div>
+                        <div>Manage Clones</div>
+                        <small>View and manage clone stage plants</small>
+                    </div>
+                </a>
+                <a href="plants_veg.php" class="quick-action">
+                    <span class="quick-action-icon">🌱</span>
+                    <div>
+                        <div>Manage Veg</div>
+                        <small>Handle vegetative stage plants</small>
+                    </div>
+                </a>
+                <a href="plants_flower.php" class="quick-action">
+                    <span class="quick-action-icon">🌸</span>
+                    <div>
+                        <div>Manage Flower</div>
+                        <small>Monitor flowering plants</small>
+                    </div>
+                </a>
+                <a href="harvest_plants.php" class="quick-action">
+                    <span class="quick-action-icon">✂️</span>
+                    <div>
+                        <div>Harvest Plants</div>
+                        <small>Process ready plants</small>
+                    </div>
+                </a>
+                <a href="take_clones.php" class="quick-action">
+                    <span class="quick-action-icon">🔄</span>
+                    <div>
+                        <div>Take Clones</div>
+                        <small>Create new clones from mothers</small>
+                    </div>
+                </a>
+                <a href="move_plants.php" class="quick-action">
+                    <span class="quick-action-icon">📦</span>
+                    <div>
+                        <div>Move Plants</div>
+                        <small>Transfer plants between rooms</small>
+                    </div>
+                </a>
+                <a href="reports.php" class="quick-action">
+                    <span class="quick-action-icon">📊</span>
+                    <div>
+                        <div>View Reports</div>
+                        <small>Generate cultivation reports</small>
+                    </div>
+                </a>
             </div>
         </section>
     </main>
@@ -98,34 +192,69 @@
     <script>
         // Load dashboard data
         function loadDashboard() {
+            document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
+            
+            let totalPlants = 0;
+            const stageCounts = {};
+            
             // Load plant counts by stage
             ['Clone', 'Veg', 'Flower', 'Mother'].forEach(stage => {
                 fetch(`get_plants_by_stage.php?stage=${stage}`)
                     .then(response => response.json())
                     .then(plants => {
                         const total = plants.reduce((sum, plant) => sum + parseInt(plant.count), 0);
+                        stageCounts[stage] = total;
                         document.getElementById(stage.toLowerCase() + 'Count').textContent = total;
-                        updateTotalCount();
+                        totalPlants += total;
+                        updateTotalAndProgress();
                     })
                     .catch(error => console.error(`Error loading ${stage} count:`, error));
             });
 
+            // Load harvested plants this month
+            loadHarvestedCount();
+            
             // Load room utilization
             loadRoomUtilization();
 
-            // Load plants ready to harvest (60+ days in flower)
+            // Load plants ready to harvest
             loadReadyToHarvest();
 
-            // Load recent activity
-            loadRecentActivity();
+            // Load genetics overview
+            loadGeneticsOverview();
         }
 
-        function updateTotalCount() {
+        function updateTotalAndProgress() {
             const clone = parseInt(document.getElementById('cloneCount').textContent) || 0;
             const veg = parseInt(document.getElementById('vegCount').textContent) || 0;
             const flower = parseInt(document.getElementById('flowerCount').textContent) || 0;
             const mother = parseInt(document.getElementById('motherCount').textContent) || 0;
-            document.getElementById('totalCount').textContent = clone + veg + flower + mother;
+            const total = clone + veg + flower + mother;
+            
+            document.getElementById('totalCount').textContent = total;
+            
+            // Update progress bars
+            if (total > 0) {
+                document.getElementById('cloneProgress').style.width = `${(clone / total) * 100}%`;
+                document.getElementById('vegProgress').style.width = `${(veg / total) * 100}%`;
+                document.getElementById('flowerProgress').style.width = `${(flower / total) * 100}%`;
+                document.getElementById('motherProgress').style.width = `${(mother / total) * 100}%`;
+            }
+        }
+
+        function loadHarvestedCount() {
+            const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM format
+            fetch(`get_all_plants_detailed.php`)
+                .then(response => response.json())
+                .then(plants => {
+                    const harvestedThisMonth = plants.filter(plant => 
+                        plant.status === 'Harvested' && 
+                        plant.date_harvested && 
+                        plant.date_harvested.startsWith(currentMonth)
+                    ).length;
+                    document.getElementById('harvestedCount').textContent = harvestedThisMonth;
+                })
+                .catch(error => console.error('Error loading harvested count:', error));
         }
 
         function loadRoomUtilization() {
@@ -136,7 +265,7 @@
                     roomCards.innerHTML = '';
 
                     // Get plant counts for each room
-                    Promise.all(['Clone', 'Veg', 'Flower'].map(stage => 
+                    Promise.all(['Clone', 'Veg', 'Flower', 'Mother'].map(stage => 
                         fetch(`get_plants_by_stage.php?stage=${stage}`).then(r => r.json())
                     )).then(stageData => {
                         const roomCounts = {};
@@ -149,17 +278,34 @@
                         rooms.forEach(room => {
                             const count = roomCounts[room.name] || 0;
                             const card = document.createElement('div');
-                            card.className = 'card';
+                            card.className = 'dashboard-card';
                             card.innerHTML = `
-                                <h4>${room.name}</h4>
-                                <p class="stat-number">${count}</p>
-                                <small>${room.room_type} Room</small>
+                                <h3>${getRoomIcon(room.room_type)} ${room.name}</h3>
+                                <div class="stat-display">
+                                    <div class="stat-number">${count}</div>
+                                    <div class="stat-label">${room.room_type} Room</div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${Math.min((count / 20) * 100, 100)}%"></div>
+                                </div>
                             `;
                             roomCards.appendChild(card);
                         });
                     });
                 })
                 .catch(error => console.error('Error loading room utilization:', error));
+        }
+
+        function getRoomIcon(roomType) {
+            const icons = {
+                'Clone': '🌿',
+                'Veg': '🌱',
+                'Flower': '🌸',
+                'Mother': '👑',
+                'Dry': '🏺',
+                'Storage': '📦'
+            };
+            return icons[roomType] || '🏠';
         }
 
         function loadReadyToHarvest() {
@@ -175,15 +321,17 @@
                     plants.forEach(plant => {
                         const daysInFlower = Math.floor((new Date() - new Date(plant.date_stage_changed)) / (1000 * 60 * 60 * 24));
                         
-                        // Show plants with 50+ days in flower as "ready soon"
-                        if (daysInFlower >= 50) {
+                        // Show plants with 45+ days in flower as "ready soon"
+                        if (daysInFlower >= 45) {
                             readyCount++;
                             const row = readyTable.insertRow();
+                            const status = daysInFlower >= 65 ? '🔴 Ready Now' : daysInFlower >= 55 ? '🟡 Soon' : '🟢 Monitor';
                             row.innerHTML = `
                                 <td>${plant.genetics_name}</td>
                                 <td>${plant.room_name || 'Unassigned'}</td>
                                 <td>${daysInFlower}</td>
                                 <td>${plant.count}</td>
+                                <td>${status}</td>
                             `;
                         }
                     });
@@ -193,12 +341,40 @@
                 .catch(error => console.error('Error loading ready to harvest plants:', error));
         }
 
-        function loadRecentActivity() {
-            // This would ideally connect to an activity log table
-            // For now, show a simple message
-            document.getElementById('recentActivity').innerHTML = `
-                <p><small>Recent activity tracking coming soon. This will show plant movements, harvests, and other important events.</small></p>
-            `;
+        function loadGeneticsOverview() {
+            fetch('get_all_genetics.php')
+                .then(response => response.json())
+                .then(genetics => {
+                    const geneticsContainer = document.getElementById('geneticsOverview');
+                    geneticsContainer.innerHTML = '';
+                    
+                    // Get plant counts for each genetics
+                    fetch('get_all_plants_detailed.php')
+                        .then(response => response.json())
+                        .then(plants => {
+                            const geneticsCounts = {};
+                            plants.filter(p => p.status === 'Growing').forEach(plant => {
+                                const geneticsName = plant.genetics_name || 'Unknown';
+                                geneticsCounts[geneticsName] = (geneticsCounts[geneticsName] || 0) + 1;
+                            });
+                            
+                            genetics.slice(0, 6).forEach(genetic => {
+                                const count = geneticsCounts[genetic.name] || 0;
+                                const card = document.createElement('div');
+                                card.className = 'dashboard-card';
+                                card.innerHTML = `
+                                    <h3>🧬 ${genetic.name}</h3>
+                                    <div class="stat-display">
+                                        <div class="stat-number">${count}</div>
+                                        <div class="stat-label">Active Plants</div>
+                                    </div>
+                                    <small>${genetic.indica_sativa_ratio || 'Unknown ratio'}</small>
+                                `;
+                                geneticsContainer.appendChild(card);
+                            });
+                        });
+                })
+                .catch(error => console.error('Error loading genetics overview:', error));
         }
 
         // Load dashboard on page load
