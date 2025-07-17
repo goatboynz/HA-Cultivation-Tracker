@@ -1,12 +1,12 @@
 <?php
 require_once 'auth.php';
-require_once 'config.php';
+require_once 'init_db.php';
 
 header('Content-Type: application/json');
 
 try {
-    $pdo = new PDO('sqlite:' . $dbPath);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Initialize the database and get PDO connection
+    $pdo = initializeDatabase();
     
     // Start transaction
     $pdo->beginTransaction();
