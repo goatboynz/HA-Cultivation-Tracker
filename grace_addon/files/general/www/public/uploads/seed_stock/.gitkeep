@@ -1,0 +1,2 @@
+# This file ensures the uploads/seed_stock directory is tracked by git
+# Seed stock photos uploaded through the system will be stored here

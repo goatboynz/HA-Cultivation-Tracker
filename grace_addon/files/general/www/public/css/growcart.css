@@ -1,0 +1,311 @@
+    :root {
+      --background-color-rgb: 24, 26, 27; /* Dark mode background */
+      --color-rgb: 209, 205, 199; /* Dark mode text color */
+    }
+
+    [data-theme="light"] {
+      --background-color-rgb: 255, 255, 255; /* Light mode background */
+      --color-rgb: 51, 51, 51; /* Light mode text color */
+    }
+
+    header nav li a svg {
+      width: var(--font-size);
+      height: var(--font-size);
+      color: var(--contrast);
+    }
+
+    nav {
+      justify-content: space-around;
+      overflow: visible;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+
+    .nav-toggle-label {
+      display: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      header.container-fluid {
+        padding: 0;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        position: relative;
+      }
+
+      nav ul:first-of-type {
+        margin: 0;
+      }
+
+      .nav-toggle-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        padding-top: 2px; /* Fine-tune alignment */
+      }
+
+      .hamburger,
+      .hamburger::before,
+      .hamburger::after {
+        content: '';
+        display: block;
+        background: currentColor;
+        height: 2px;
+        width: 25px;
+        position: absolute;
+        transition: transform 0.3s;
+      }
+
+      .hamburger::before {
+        transform: translateY(-7px);
+      }
+
+      .hamburger::after {
+        transform: translateY(7px);
+      }
+
+      nav ul:nth-of-type(2) {
+        display: none;
+        position: fixed;
+        top: 60px; /* Adjust this value based on your header height */
+        left: 0;
+        right: 0;
+        background-color: rgba(var(--background-color-rgb), 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+        width: 100%;
+        padding: 1rem 0;
+        margin: 0;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+      }
+
+      .nav-toggle:checked ~ ul:nth-of-type(2) {
+        display: block !important;
+      }
+
+      nav ul:nth-of-type(2) li {
+        display: block;
+        margin: 0;
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid rgba(var(--color-rgb), 0.1);
+      }
+
+      nav ul:nth-of-type(2) li:last-child {
+        border-bottom: none;
+      }
+
+      .nav-toggle:checked + .nav-toggle-label .hamburger {
+        background: transparent;
+      }
+
+      .nav-toggle:checked + .nav-toggle-label .hamburger::before {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .nav-toggle:checked + .nav-toggle-label .hamburger::after {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      main.container {
+        padding: 0 1rem;
+      }
+
+      article {
+        width: 100% !important;
+        margin: 0 !important;
+      }
+    }
+/* Enhanced styling for CultivationTracker */
+
+/* Stage and Status Badges */
+.stage-badge, .status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stage-badge.clone { background-color: #22c55e; color: white; }
+.stage-badge.veg { background-color: #3b82f6; color: white; }
+.stage-badge.flower { background-color: #f59e0b; color: white; }
+.stage-badge.mother { background-color: #8b5cf6; color: white; }
+
+.status-badge.growing { background-color: #10b981; color: white; }
+.status-badge.harvested { background-color: #6b7280; color: white; }
+.status-badge.destroyed { background-color: #ef4444; color: white; }
+.status-badge.sent { background-color: #06b6d4; color: white; }
+
+/* Card enhancements */
+.card {
+    background: var(--card-background-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Statistics numbers */
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: var(--primary);
+}
+
+/* Button improvements */
+.button.small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    margin: 0.125rem;
+}
+
+/* Table enhancements */
+.table-container {
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.table-container table {
+    width: 100%;
+    min-width: 600px;
+}
+
+/* Form grid improvements */
+.form .grid {
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Photo display */
+.genetics-photo {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Status messages */
+.status-message {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.status-message.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.status-message.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .status-message.success {
+    background-color: #064e3b;
+    color: #a7f3d0;
+    border-color: #065f46;
+}
+
+[data-theme="dark"] .status-message.error {
+    background-color: #7f1d1d;
+    color: #fca5a5;
+    border-color: #991b1b;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .button.small {
+        display: block;
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+}
+
+/* Tracking number styling */
+.tracking-number {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: var(--primary);
+    background-color: var(--card-background-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--card-border-color);
+}
+
+/* Report buttons */
+.report-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.report-buttons .button {
+    flex: 1;
+    min-width: 120px;
+}
+
+/* Navigation dropdown improvements */
+details[role="list"] summary::after {
+    margin-inline-start: auto;
+}
+
+/* Filter section */
+.filters {
+    background: var(--card-background-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--card-border-color);
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: "Loading...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--background-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--border-color);
+}

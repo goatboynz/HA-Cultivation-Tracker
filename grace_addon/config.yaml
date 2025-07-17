@@ -1,0 +1,22 @@
+name: "MediFlower Cultivation Tracker"
+description: "Professional cannabis cultivation management system with plant tracking, genetics database, mother plant management, harvest tracking, and comprehensive compliance reporting"
+url: "https://github.com/goatboynz/HA-Cultivation-Tracker"
+codenotary: mediflower@cultivation-tracker.com
+version: "2.0.0"
+slug: "mediflower_cultivation_tracker"
+panel_icon: mdi:cannabis
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+ingress: true
+ingress_port: 8420
+startup: application
+
+map:
+  - type: addon_config
+    read_only: False
+    path: /grace_config
