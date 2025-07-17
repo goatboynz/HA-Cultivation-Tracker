@@ -4,6 +4,7 @@ FROM $BUILD_FROM
 WORKDIR /data
 
 RUN apk -U upgrade && apk add --no-cache \
+    bash \
     curl \
     nginx \
     php83-fpm \
@@ -30,13 +31,20 @@ RUN apk -U upgrade && apk add --no-cache \
 #    chown php:nginx /grace_config/grace.db
 
 COPY files/general files/php83 /
+
 RUN mkdir -p /data && \
     chown -R php:nginx /data && \
     chmod -R 755 /data && \
-    chown php:nginx /www/public/grace.db && \
+    mkdir -p /var/www/public && \
+    chown -R php:nginx /var/www && \
+    chmod -R 755 /var/www && \
+    chown php:nginx /var/www/public/grace.db && \
+    chmod 664 /var/www/public/grace.db && \
     chmod +x /etc/services.d/nginx/run && \
     chmod +x /etc/services.d/nginx/finish && \
     chmod +x /etc/services.d/php-fpm83/run && \
-    chmod +x /etc/services.d/php-fpm83/finish
+    chmod +x /etc/services.d/php-fpm83/finish && \
+    find /etc/services.d -name "run" -exec chmod +x {} \; && \
+    find /etc/services.d -name "finish" -exec chmod +x {} \;
 
 ENTRYPOINT ["/init"]

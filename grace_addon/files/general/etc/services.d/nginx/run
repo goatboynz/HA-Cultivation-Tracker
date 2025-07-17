@@ -1,2 +1,20 @@
-#!/usr/bin/with-contenv sh
-exec nginx
+#!/usr/bin/with-contenv bash
+set -e
+
+echo "Starting nginx..."
+
+# Ensure nginx directories exist
+mkdir -p /var/log/nginx
+mkdir -p /var/lib/nginx/tmp
+mkdir -p /run/nginx
+
+# Set proper permissions
+chown -R nginx:nginx /var/log/nginx
+chown -R nginx:nginx /var/lib/nginx
+chown -R nginx:nginx /run/nginx
+
+# Test nginx configuration
+nginx -t
+
+# Start nginx
+exec nginx -g "daemon off;"
