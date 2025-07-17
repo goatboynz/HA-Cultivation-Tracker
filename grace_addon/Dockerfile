@@ -32,19 +32,17 @@ RUN apk -U upgrade && apk add --no-cache \
 
 COPY files/general files/php83 /
 
-RUN mkdir -p /data && \
-    chown -R php:nginx /data && \
-    chmod -R 755 /data && \
-    mkdir -p /var/www/public && \
-    chown -R php:nginx /var/www && \
-    chmod -R 755 /var/www && \
-    chown php:nginx /var/www/public/grace.db && \
-    chmod 664 /var/www/public/grace.db && \
-    chmod +x /etc/services.d/nginx/run && \
-    chmod +x /etc/services.d/nginx/finish && \
-    chmod +x /etc/services.d/php-fpm83/run && \
-    chmod +x /etc/services.d/php-fpm83/finish && \
-    find /etc/services.d -name "run" -exec chmod +x {} \; && \
-    find /etc/services.d -name "finish" -exec chmod +x {} \;
+# Set up initial permissions and make init scripts executable
+RUN chmod +x /etc/cont-init.d/* 2>/dev/null || true && \
+    chmod +x /etc/services.d/*/run 2>/dev/null || true && \
+    chmod +x /etc/services.d/*/finish 2>/dev/null || true && \
+    mkdir -p /data /var/www/public /var/log/nginx /var/log/php83 && \
+    cp -r /www/public/* /var/www/public/ 2>/dev/null || true && \
+    rm -rf /www && \
+    chown -R php:nginx /data /var/www && \
+    chown -R nginx:nginx /var/log/nginx && \
+    chown -R php:php /var/log/php83 && \
+    chmod -R 755 /data /var/www && \
+    if [ -f "/var/www/public/grace.db" ]; then chown php:nginx /var/www/public/grace.db && chmod 664 /var/www/public/grace.db; fi
 
 ENTRYPOINT ["/init"]

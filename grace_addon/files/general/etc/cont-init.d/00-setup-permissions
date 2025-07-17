@@ -1,0 +1,38 @@
+#!/command/with-contenv bash
+
+echo "=== Grace Addon Permission Setup ==="
+
+# Make all service scripts executable
+echo "Setting execute permissions on service files..."
+find /etc/services.d -type f -name "run" -exec chmod +x {} \; 2>/dev/null || true
+find /etc/services.d -type f -name "finish" -exec chmod +x {} \; 2>/dev/null || true
+find /etc/cont-init.d -type f -exec chmod +x {} \; 2>/dev/null || true
+
+# Show permissions for debugging
+echo "Current service file permissions:"
+ls -la /etc/services.d/*/run 2>/dev/null || echo "No run files found"
+ls -la /etc/services.d/*/finish 2>/dev/null || echo "No finish files found"
+
+# Create and set permissions for data directories
+echo "Setting up data directories..."
+mkdir -p /data
+mkdir -p /var/www/public
+chown -R php:nginx /data
+chown -R php:nginx /var/www
+chmod -R 755 /data
+chmod -R 755 /var/www
+
+# Handle database file permissions if it exists
+if [ -f "/var/www/public/grace.db" ]; then
+    echo "Setting database file permissions..."
+    chown php:nginx /var/www/public/grace.db
+    chmod 664 /var/www/public/grace.db
+fi
+
+# Ensure nginx and php-fpm can write to necessary directories
+mkdir -p /var/log/nginx
+mkdir -p /var/log/php83
+chown -R nginx:nginx /var/log/nginx
+chown -R php:php /var/log/php83
+
+echo "=== Permission Setup Complete ==="

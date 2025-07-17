@@ -1,0 +1,18 @@
+#!/usr/bin/with-contenv bash
+set -e
+
+echo "Starting PHP-FPM..."
+
+# Ensure PHP-FPM directories exist
+mkdir -p /var/log/php83
+mkdir -p /run/php
+
+# Set proper permissions
+chown -R php:php /var/log/php83
+chown -R php:php /run/php
+
+# Test PHP-FPM configuration
+php-fpm83 -t
+
+# Start PHP-FPM
+exec php-fpm83 --nodaemonize --fpm-config /etc/php83/php-fpm.conf
