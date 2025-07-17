@@ -30,6 +30,13 @@ RUN apk -U upgrade && apk add --no-cache \
 #    chown php:nginx /grace_config/grace.db
 
 COPY files/general files/php83 /
-RUN chown php:nginx /www/public/grace.db
+RUN mkdir -p /data && \
+    chown -R php:nginx /data && \
+    chmod -R 755 /data && \
+    chown php:nginx /www/public/grace.db && \
+    chmod +x /etc/services.d/nginx/run && \
+    chmod +x /etc/services.d/nginx/finish && \
+    chmod +x /etc/services.d/php-fpm83/run && \
+    chmod +x /etc/services.d/php-fpm83/finish
 
 ENTRYPOINT ["/init"]
