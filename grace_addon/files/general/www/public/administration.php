@@ -72,6 +72,75 @@
 		<li><a href="show_database.php">Dump database</a></li>
 	    </ul>
         </section>
+
+        <section>
+            <h2>Testing & Development</h2>
+            <div style="background: #2d3748; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <p><strong>⚠️ Warning:</strong> These tools are for testing purposes only. Use with caution!</p>
+            </div>
+            <ul>
+                <li>
+                    <button onclick="generateDummyData()" class="secondary">Generate Dummy Data</button><br />
+                    <small>Creates sample genetics, rooms, plants, and transactions for testing</small>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <button onclick="cleanupDummyData()" class="contrast outline">Delete All Dummy Data</button><br />
+                    <small>Removes all dummy data created for testing (irreversible!)</small>
+                </li>
+            </ul>
+        </section>
+
+        <script>
+        function generateDummyData() {
+            if (confirm('This will create dummy data for testing. Continue?')) {
+                fetch('generate_dummy_data.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Dummy data generated successfully!\n\n' + data.message);
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    alert('Error generating dummy data: ' + error);
+                });
+            }
+        }
+
+        function cleanupDummyData() {
+            if (confirm('⚠️ WARNING: This will permanently delete ALL dummy data!\n\nThis action cannot be undone. Are you sure?')) {
+                if (confirm('Last chance! This will delete all test data. Continue?')) {
+                    fetch('cleanup_dummy_data.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Dummy data cleaned up successfully!\n\n' + data.message);
+                            location.reload();
+                        } else {
+                            alert('Error: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error cleaning up dummy data: ' + error);
+                    });
+                }
+            }
+        }
+        </script>
     </main>
 
     <script src="js/growcart.js"></script>
