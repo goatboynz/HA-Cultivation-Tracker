@@ -17,4 +17,4 @@ chown -R nginx:nginx /run/nginx
 nginx -t
 
 # Start nginx
-exec nginx -g "daemon off;"
+exec nginx
