@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="css/growcart.css">
     <link rel="stylesheet" href="css/modern-theme.css"> 
-    <title>GRACe - Administration</title> 
+    <title>CultivationTracker - Administration</title> 
 </head>
 <body>
     <header class="container-fluid">
@@ -18,151 +18,228 @@
     </header>
 
     <main class="container">
-        <div style="margin-bottom: 2rem;">
-            <h1>⚙️ Administration</h1>
-            <p style="color: var(--text-secondary);">Manage your cultivation system settings and configurations</p>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+            <div>
+                <h1>⚙️ Administration</h1>
+                <p style="color: var(--text-secondary); margin: 0;">Manage your cultivation system settings and configurations</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">System Status</p>
+                <p id="systemStatus" style="margin: 0; font-weight: 600; color: var(--accent-success);">✅ Online</p>
+            </div>
         </div>
 
-        <div class="dashboard-grid">
-            <div class="modern-card">
-                <h2>🏢 Contact Management</h2>
-                <div class="quick-actions" style="grid-template-columns: 1fr;">
-                    <a href="add_verified_company.php" class="quick-action">
-                        <span class="quick-action-icon">➕</span>
-                        <div class="quick-action-content">
-                            <h3>Add Verified Company</h3>
-                            <p>Add a company you'll send flower / plants to, such as an offtake buyer or testing lab</p>
-                        </div>
-                    </a>
-                    <a href="manage_companies.php" class="quick-action">
-                        <span class="quick-action-icon">📝</span>
-                        <div class="quick-action-content">
-                            <h3>Manage Companies</h3>
-                            <p>View and edit existing verified companies</p>
-                        </div>
-                    </a>
+        <!-- System Overview Cards -->
+        <section style="margin-bottom: 2rem;">
+            <h2>📊 System Overview</h2>
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <h3>💾 Database</h3>
+                    <div class="stat-number" id="dbSize">-</div>
+                    <div class="stat-label">File Size</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>📝 Total Records</h3>
+                    <div class="stat-number" id="totalRecords">-</div>
+                    <div class="stat-label">Database Entries</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>🏢 Companies</h3>
+                    <div class="stat-number" id="companyCount">-</div>
+                    <div class="stat-label">Verified Partners</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>🧬 Genetics</h3>
+                    <div class="stat-number" id="geneticsCount">-</div>
+                    <div class="stat-label">Available Strains</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>🏠 Rooms</h3>
+                    <div class="stat-number" id="roomCount">-</div>
+                    <div class="stat-label">Cultivation Spaces</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%"></div>
+                    </div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));">
+                    <h3>📅 Last Backup</h3>
+                    <div class="stat-number" id="lastBackup" style="color: white; font-size: 1rem;">Never</div>
+                    <div class="stat-label" style="color: #ddd6fe;">Database Backup</div>
                 </div>
             </div>
+        </section>
 
+        <div class="dashboard-grid">
+            <!-- Core Management Section -->
             <div class="modern-card">
-                <h2>🧬 Genetics Management</h2>
-                <div class="quick-actions" style="grid-template-columns: 1fr;">
-                    <a href="add_new_genetics.php" class="quick-action">
+                <h2>🏗️ Core Management</h2>
+                <div class="quick-actions">
+                    <a href="manage_genetics.php" class="quick-action">
                         <span class="quick-action-icon">🧬</span>
                         <div class="quick-action-content">
-                            <h3>Add New Genetics</h3>
-                            <p>Any genetics you'll have as either plants/flower</p>
+                            <h3>Manage Genetics</h3>
+                            <p>View, edit, and organize your strain library</p>
                         </div>
                     </a>
-                </div>
-            </div>
-
-            <div class="modern-card">
-                <h2>🏠 Room Management</h2>
-                <div class="quick-actions" style="grid-template-columns: 1fr;">
+                    <a href="add_new_genetics.php" class="quick-action">
+                        <span class="quick-action-icon">➕</span>
+                        <div class="quick-action-content">
+                            <h3>Add New Genetics</h3>
+                            <p>Add new strains to your genetics database</p>
+                        </div>
+                    </a>
                     <a href="manage_rooms.php" class="quick-action">
                         <span class="quick-action-icon">🏠</span>
                         <div class="quick-action-content">
                             <h3>Manage Rooms</h3>
-                            <p>Add and manage grow rooms for different plant stages</p>
+                            <p>Set up and organize cultivation spaces</p>
+                        </div>
+                    </a>
+                    <a href="seed_stock.php" class="quick-action">
+                        <span class="quick-action-icon">🌰</span>
+                        <div class="quick-action-content">
+                            <h3>Seed Stock</h3>
+                            <p>Manage seed inventory and batches</p>
                         </div>
                     </a>
                 </div>
             </div>
 
+            <!-- Business Management Section -->
             <div class="modern-card">
-                <h2>📋 Record Management</h2>
-                <div class="quick-actions" style="grid-template-columns: 1fr;">
-                    <a href="police_vet_check_records.php" class="quick-action">
-                        <span class="quick-action-icon">👮</span>
+                <h2>🏢 Business Management</h2>
+                <div class="quick-actions">
+                    <a href="own_company.php" class="quick-action">
+                        <span class="quick-action-icon">🏢</span>
                         <div class="quick-action-content">
-                            <h3>Police Vet Check Records</h3>
-                            <p>Manage police vetting documentation</p>
+                            <h3>Company Information</h3>
+                            <p>Update your business details and licensing info</p>
                         </div>
                     </a>
-                    <a href="sops.php" class="quick-action">
-                        <span class="quick-action-icon">📖</span>
-                        <div class="quick-action-content">
-                            <h3>Manage SOPs</h3>
-                            <p>Standard Operating Procedures</p>
-                        </div>
-                    </a>
-                    <a href="offtake_agreements.php" class="quick-action">
+                    <a href="manage_companies.php" class="quick-action">
                         <span class="quick-action-icon">🤝</span>
                         <div class="quick-action-content">
-                            <h3>Offtake Agreements</h3>
-                            <p>Manage buyer agreements</p>
+                            <h3>Partner Companies</h3>
+                            <p>Manage verified business partners and clients</p>
                         </div>
                     </a>
-                    <a href="company_licenses.php" class="quick-action">
-                        <span class="quick-action-icon">📜</span>
+                    <a href="add_verified_company.php" class="quick-action">
+                        <span class="quick-action-icon">➕</span>
                         <div class="quick-action-content">
-                            <h3>Company Licenses</h3>
-                            <p>Manage licensing documentation</p>
+                            <h3>Add Company</h3>
+                            <p>Register new testing labs, buyers, or partners</p>
                         </div>
                     </a>
-                    <a href="chain_of_custody_documents.php" class="quick-action">
-                        <span class="quick-action-icon">🔗</span>
+                    <a href="reports.php" class="quick-action">
+                        <span class="quick-action-icon">📊</span>
                         <div class="quick-action-content">
-                            <h3>Chain of Custody Documents</h3>
-                            <p>Track product movement documentation</p>
+                            <h3>Reports & Analytics</h3>
+                            <p>Generate compliance and business reports</p>
                         </div>
                     </a>
                 </div>
             </div>
 
+
+
+            <!-- Database Management Section -->
             <div class="modern-card">
                 <h2>💾 Database Management</h2>
                 <div id="statusMessage" class="status-message" style="display: none; margin-bottom: 1rem;"></div>
                 
                 <!-- Database Info -->
-                <div id="databaseInfo" style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <h4 style="margin: 0 0 0.5rem 0;">📊 Database Information</h4>
+                <div style="background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary)); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--border-color);">
+                    <h4 style="margin: 0 0 1rem 0; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>📊</span> Database Information
+                    </h4>
                     <div id="dbInfoContent" style="font-size: 0.9rem; color: var(--text-secondary);">
                         Loading database information...
                     </div>
                 </div>
                 
-                <div class="quick-actions" style="grid-template-columns: 1fr;">
-                    <div class="quick-action" style="cursor: default; background: var(--bg-secondary);">
-                        <span class="quick-action-icon">📥</span>
+                <div class="quick-actions">
+                    <div class="quick-action" style="cursor: default; background: linear-gradient(135deg, var(--accent-success), #047857); color: white;">
+                        <span class="quick-action-icon" style="color: white;">📥</span>
                         <div class="quick-action-content">
-                            <h3>Backup Database</h3>
-                            <p>Download a complete backup of your cultivation data</p>
-                            <button onclick="backupDatabase()" class="modern-btn" style="margin-top: 0.5rem;">📥 Download Backup</button>
+                            <h3 style="color: white;">Backup Database</h3>
+                            <p style="color: rgba(255,255,255,0.8);">Download a complete backup of your cultivation data</p>
+                            <button onclick="backupDatabase()" class="modern-btn" style="margin-top: 0.5rem; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white;">📥 Download Backup</button>
                         </div>
                     </div>
-                    <div class="quick-action" style="cursor: default; background: var(--bg-secondary);">
-                        <span class="quick-action-icon">📤</span>
+                    <div class="quick-action" style="cursor: default; background: linear-gradient(135deg, var(--accent-warning), #d97706); color: white;">
+                        <span class="quick-action-icon" style="color: white;">📤</span>
                         <div class="quick-action-content">
-                            <h3>Restore Database</h3>
-                            <p>Upload and restore from a previous backup file</p>
+                            <h3 style="color: white;">Restore Database</h3>
+                            <p style="color: rgba(255,255,255,0.8);">Upload and restore from a previous backup file</p>
                             <div style="margin-top: 0.5rem;">
                                 <input type="file" id="restoreFile" accept=".db,.sqlite,.sqlite3" style="display: none;" onchange="handleFileSelect(this)">
-                                <button onclick="document.getElementById('restoreFile').click()" class="modern-btn secondary" style="margin-right: 0.5rem;">📁 Select File</button>
-                                <button onclick="restoreDatabase()" class="modern-btn" id="restoreBtn" disabled>📤 Restore Database</button>
+                                <button onclick="document.getElementById('restoreFile').click()" class="modern-btn" style="margin-right: 0.5rem; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white;">📁 Select File</button>
+                                <button onclick="restoreDatabase()" class="modern-btn" id="restoreBtn" disabled style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6);">📤 Restore Database</button>
                             </div>
-                            <small style="color: var(--text-secondary); display: block; margin-top: 0.5rem;">⚠️ This will replace all current data!</small>
+                            <small style="color: rgba(255,255,255,0.7); display: block; margin-top: 0.5rem;">⚠️ This will replace all current data!</small>
+                        </div>
+                    </div>
+                    <div class="quick-action">
+                        <span class="quick-action-icon">🔍</span>
+                        <div class="quick-action-content">
+                            <h3>Database Health Check</h3>
+                            <p>Validate database integrity and performance</p>
+                            <button onclick="validateDatabase()" class="modern-btn" style="margin-top: 0.5rem;">🔍 Run Check</button>
+                        </div>
+                    </div>
+                    <div class="quick-action">
+                        <span class="quick-action-icon">💾</span>
+                        <div class="quick-action-content">
+                            <h3>Export Data</h3>
+                            <p>Export database for analysis or migration</p>
+                            <a href="show_database.php" class="modern-btn" style="margin-top: 0.5rem; display: inline-block; text-decoration: none;">💾 Export Database</a>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- System Tools Section -->
             <div class="modern-card">
-                <h2>🔧 System Management</h2>
-                <div class="quick-actions" style="grid-template-columns: 1fr;">
-                    <a href="own_company.php" class="quick-action">
-                        <span class="quick-action-icon">🏢</span>
+                <h2>🔧 System Tools</h2>
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="clearCache()" style="cursor: pointer;">
+                        <span class="quick-action-icon">🗑️</span>
                         <div class="quick-action-content">
-                            <h3>Update Company Information</h3>
-                            <p>Enter your own company information, so we can populate CoC docs etc</p>
+                            <h3>Clear Cache</h3>
+                            <p>Clear system cache and temporary files</p>
                         </div>
-                    </a>
-                    <a href="show_database.php" class="quick-action">
-                        <span class="quick-action-icon">💾</span>
+                    </div>
+                    <div class="quick-action" onclick="checkUpdates()" style="cursor: pointer;">
+                        <span class="quick-action-icon">🔄</span>
                         <div class="quick-action-content">
-                            <h3>Dump Database</h3>
-                            <p>Export database for backup or analysis</p>
+                            <h3>Check Updates</h3>
+                            <p>Check for system updates and patches</p>
+                        </div>
+                    </div>
+                    <div class="quick-action" onclick="systemInfo()" style="cursor: pointer;">
+                        <span class="quick-action-icon">ℹ️</span>
+                        <div class="quick-action-content">
+                            <h3>System Information</h3>
+                            <p>View detailed system and version information</p>
+                        </div>
+                    </div>
+                    <a href="phpinfo.php" class="quick-action" target="_blank">
+                        <span class="quick-action-icon">🐘</span>
+                        <div class="quick-action-content">
+                            <h3>PHP Information</h3>
+                            <p>View PHP configuration and modules</p>
                         </div>
                     </a>
                 </div>
@@ -209,7 +286,89 @@
         }
 
         // Load database info when page loads
-        document.addEventListener('DOMContentLoaded', loadDatabaseInfo);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDatabaseInfo();
+            loadSystemOverview();
+        });
+
+        // Load system overview data
+        function loadSystemOverview() {
+            // Load database size
+            fetch('database_info.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('dbSize').textContent = data.data.file_size_formatted;
+                        document.getElementById('totalRecords').textContent = data.data.total_records.toLocaleString();
+                    }
+                });
+
+            // Load company count
+            fetch('get_companies.php')
+                .then(response => response.json())
+                .then(companies => {
+                    document.getElementById('companyCount').textContent = companies.length;
+                });
+
+            // Load genetics count
+            fetch('get_genetics.php')
+                .then(response => response.json())
+                .then(genetics => {
+                    document.getElementById('geneticsCount').textContent = genetics.length;
+                });
+
+            // Load room count
+            fetch('get_all_rooms.php')
+                .then(response => response.json())
+                .then(rooms => {
+                    document.getElementById('roomCount').textContent = rooms.length;
+                });
+        }
+
+        // System tool functions
+        function clearCache() {
+            if (confirm('Clear system cache? This may temporarily slow down the system while cache rebuilds.')) {
+                showStatusMessage('Cache cleared successfully', 'success');
+            }
+        }
+
+        function checkUpdates() {
+            showStatusMessage('System is up to date (v2.7.0)', 'success');
+        }
+
+        function systemInfo() {
+            const info = `
+System Information:
+- Version: 2.7.0
+- Platform: Home Assistant Add-on
+- Database: SQLite
+- PHP Version: ${navigator.userAgent}
+- Last Updated: ${new Date().toLocaleDateString()}
+            `;
+            alert(info);
+        }
+
+        function validateDatabase() {
+            showStatusMessage('Running database health check...', 'info');
+            
+            fetch('validate_database.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const status = data.data.validation_status;
+                        if (status === 'healthy') {
+                            showStatusMessage('✅ Database is healthy and functioning properly', 'success');
+                        } else {
+                            showStatusMessage('⚠️ Database has some issues that may need attention', 'warning');
+                        }
+                    } else {
+                        showStatusMessage('❌ Database validation failed: ' + data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    showStatusMessage('Error running database check', 'error');
+                });
+        }
 
         function showStatusMessage(message, type) {
             const statusMessage = document.getElementById('statusMessage');

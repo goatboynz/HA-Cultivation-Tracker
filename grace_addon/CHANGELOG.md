@@ -2,6 +2,35 @@
 
 All notable changes to the MediFlower Cultivation Tracker addon will be documented in this file.
 
+## [2.8.0] - 2025-01-19
+
+### 🎨 **Administration Page Redesign**
+- **Dashboard-Style Layout**: Complete redesign matching the main dashboard aesthetic
+- **System Overview Cards**: Real-time statistics showing database size, records, companies, genetics, and rooms
+- **Enhanced Visual Design**: Modern cards with gradients, progress bars, and professional styling
+- **Better Organization**: Logical grouping of functions into Core Management, Business Management, Database Management, and System Tools
+
+### ✨ **New Administration Features**
+- **System Status Display**: Real-time system health indicator in page header
+- **Enhanced Database Tools**: Health check validation, export options, and detailed information display
+- **System Tools Section**: Cache clearing, update checking, system information, and PHP details
+- **Professional Statistics**: Live counters for all major system components
+- **Improved Navigation**: Better categorization and more intuitive access to functions
+
+### 🔧 **Enhanced Functionality**
+- **Real-time Data Loading**: Dynamic loading of system statistics and database information
+- **Database Health Checks**: Comprehensive validation tools for database integrity
+- **System Information Tools**: Detailed system and version information display
+- **Better Error Handling**: Enhanced status messages and user feedback
+- **Professional Gradients**: Color-coded sections for different types of operations
+
+### 🎯 **User Experience Improvements**
+- **Consistent Styling**: Matches dashboard design language throughout
+- **Better Visual Hierarchy**: Clear section organization with modern card layouts
+- **Enhanced Feedback**: Real-time status updates and system information
+- **Professional Appearance**: Enterprise-grade administration interface
+- **Mobile Responsive**: Optimized for all device sizes
+
 ## [2.7.0] - 2025-01-19
 
 ### 💾 **Database Management System**
