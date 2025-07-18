@@ -5,15 +5,14 @@ on:
     branches:
       - main
       - master
-  pull_request:
-    branches:
-      - main
-      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build add-on
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
@@ -32,18 +31,13 @@ jobs:
         run: |
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
              echo "build_arch=true" >> $GITHUB_OUTPUT;
-             if [[ -z "${{ github.head_ref }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
-                 echo "BUILD_ARGS=" >> $GITHUB_ENV;
-             else
-                 echo "BUILD_ARGS=--test" >> $GITHUB_ENV;
-             fi
+             echo "BUILD_ARGS=" >> $GITHUB_ENV;
            else
              echo "${{ matrix.arch }} is not a valid arch for grace_addon, skipping build";
              echo "build_arch=false" >> $GITHUB_OUTPUT;
           fi
 
       - name: Login to GitHub Container Registry
-        if: env.BUILD_ARGS != '--test'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
