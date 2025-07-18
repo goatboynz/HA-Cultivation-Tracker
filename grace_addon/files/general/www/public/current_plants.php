@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>GRACe - Current Plants</title> 
 </head>
 <body>
@@ -15,82 +16,91 @@
     </header>
 
     <main class="container">
-        <h1>Current Plants Overview</h1>
+        <div style="margin-bottom: 2rem;">
+            <h1>📊 Current Plants Overview</h1>
+            <p style="color: var(--text-secondary); margin: 0;">Summary of all plants by stage and location</p>
+        </div>
 
-        <div class="grid">
-            <label for="hideZeroRowsCheckbox">
-                <input type="checkbox" id="hideZeroRowsCheckbox" name="hideZeroRows">
-                Hide rows with zero plants
+        <div class="modern-card" style="margin-bottom: 2rem;">
+            <label for="hideZeroRowsCheckbox" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" id="hideZeroRowsCheckbox" name="hideZeroRows" style="margin: 0;">
+                <span>Hide rows with zero plants</span>
             </label>
         </div>
 
-        <section>
-            <h2>Clone Stage</h2>
-            <table id="cloneTable" class="table">
-                <thead>
-                    <tr>
-                        <th>Genetics</th>
-                        <th>Room</th>
-                        <th>Count</th>
-                        <th>Date Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <p id="noCloneMessage" style="display: none; text-align: center; font-style: italic;">No plants in clone stage</p>
-        </section>
+        <div class="modern-card" style="margin-bottom: 2rem;">
+            <h2>🌿 Clone Stage</h2>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="cloneTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Genetics</th>
+                            <th>Room</th>
+                            <th>Count</th>
+                            <th>Date Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <p id="noCloneMessage" style="display: none; text-align: center; font-style: italic; color: var(--text-secondary); padding: 2rem;">No plants in clone stage</p>
+        </div>
 
-        <section>
-            <h2>Vegetative Stage</h2>
-            <table id="vegTable" class="table">
-                <thead>
-                    <tr>
-                        <th>Genetics</th>
-                        <th>Room</th>
-                        <th>Count</th>
-                        <th>Date Moved to Veg</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <p id="noVegMessage" style="display: none; text-align: center; font-style: italic;">No plants in vegetative stage</p>
-        </section>
+        <div class="modern-card" style="margin-bottom: 2rem;">
+            <h2>🌱 Vegetative Stage</h2>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="vegTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Genetics</th>
+                            <th>Room</th>
+                            <th>Count</th>
+                            <th>Date Moved to Veg</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <p id="noVegMessage" style="display: none; text-align: center; font-style: italic; color: var(--text-secondary); padding: 2rem;">No plants in vegetative stage</p>
+        </div>
 
-        <section>
-            <h2>Flowering Stage</h2>
-            <table id="flowerTable" class="table">
-                <thead>
-                    <tr>
-                        <th>Genetics</th>
-                        <th>Room</th>
-                        <th>Count</th>
-                        <th>Date Moved to Flower</th>
-                        <th>Days in Flower</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <p id="noFlowerMessage" style="display: none; text-align: center; font-style: italic;">No plants in flowering stage</p>
-        </section>
+        <div class="modern-card" style="margin-bottom: 2rem;">
+            <h2>🌸 Flowering Stage</h2>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="flowerTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Genetics</th>
+                            <th>Room</th>
+                            <th>Count</th>
+                            <th>Date Moved to Flower</th>
+                            <th>Days in Flower</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <p id="noFlowerMessage" style="display: none; text-align: center; font-style: italic; color: var(--text-secondary); padding: 2rem;">No plants in flowering stage</p>
+        </div>
 
-        <section>
-            <h2>Summary</h2>
-            <div class="grid">
+        <div class="modern-card">
+            <h2>📈 Summary</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 1rem;">
                 <div>
-                    <h3>Total Plants by Stage</h3>
-                    <ul id="stageSummary">
+                    <h3>🌱 Total Plants by Stage</h3>
+                    <ul id="stageSummary" style="list-style: none; padding: 0;">
                     </ul>
                 </div>
                 <div>
-                    <h3>Total Plants by Room</h3>
-                    <ul id="roomSummary">
+                    <h3>🏠 Total Plants by Room</h3>
+                    <ul id="roomSummary" style="list-style: none; padding: 0;">
                     </ul>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <script src="js/growcart.js"></script> 

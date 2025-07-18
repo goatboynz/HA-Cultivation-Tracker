@@ -2,6 +2,32 @@
 
 All notable changes to the MediFlower Cultivation Tracker addon will be documented in this file.
 
+## [2.5.0] - 2025-01-19
+
+### 🔧 Critical Bug Fixes
+- **Fixed Move Plant Functionality**: Resolved 500 error when moving plants between stages
+  - Root cause: GET requests were being sent to POST-only endpoint
+  - Solution: Updated `quickMove()` function to use proper POST requests with FormData
+  - Enhanced `move_plants.php` to handle both individual and bulk plant moves
+
+### 🎨 Enhanced Modern Theme
+- **Updated Plant Tracking Page**: Complete modern theme makeover with card-based layout
+- **New Plant Summary Page**: Comprehensive plant details view with timeline and photos
+- **Enhanced All Plants Page**: Added "View" button for detailed plant summary
+- **Improved Edit Plant Page**: Fixed CSS references and enhanced functionality
+
+### ✨ New Features
+- **Plant Summary View**: Detailed plant information with timeline, photos, and harvest data
+- **Enhanced Navigation**: Better organization of plant tracking features
+- **Test Functionality**: Added debugging tools for move plant operations
+- **Responsive Cards**: Modern card layouts with emoji icons throughout
+
+### 🚀 Technical Improvements
+- Fixed POST/GET request handling in plant movement system
+- Enhanced error handling and user feedback
+- Improved data formatting for plant operations
+- Better mobile responsiveness across all pages
+
 ## [2.4.0] - 2025-01-18
 
 ### 🎨 Complete Modern Theme Implementation

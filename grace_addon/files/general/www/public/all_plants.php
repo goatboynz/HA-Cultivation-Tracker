@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>CultivationTracker - All Plants</title> 
 </head>
 <body>
@@ -17,50 +18,50 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div>
         
-        <div class="grid">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
-                <h1>All Plants</h1>
-                <p><small>Individual plant management and tracking</small></p>
+                <h1>🌿 All Plants</h1>
+                <p style="color: var(--text-secondary); margin: 0;">Individual plant management and tracking</p>
             </div>
-            <div style="text-align: right;">
-                <button onclick="refreshData()" class="button">Refresh</button>
-                <a href="receive_genetics.php" class="button">Add Plants</a>
+            <div style="display: flex; gap: 0.5rem;">
+                <button onclick="refreshData()" class="modern-btn secondary">🔄 Refresh</button>
+                <a href="receive_genetics.php" class="modern-btn">➕ Add Plants</a>
             </div>
         </div>
 
         <!-- Filters -->
-        <div class="card">
-            <h3>Filters</h3>
-            <div class="grid">
+        <div class="modern-card" style="margin-bottom: 2rem;">
+            <h3>🔍 Filters</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
                 <div>
                     <label for="stageFilter">Stage:</label>
-                    <select id="stageFilter" class="input">
+                    <select id="stageFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Stages</option>
-                        <option value="Clone">Clone</option>
-                        <option value="Veg">Veg</option>
-                        <option value="Flower">Flower</option>
-                        <option value="Mother">Mother</option>
+                        <option value="Clone">🌿 Clone</option>
+                        <option value="Veg">🌱 Veg</option>
+                        <option value="Flower">🌸 Flower</option>
+                        <option value="Mother">👑 Mother</option>
                     </select>
                 </div>
                 <div>
                     <label for="statusFilter">Status:</label>
-                    <select id="statusFilter" class="input">
+                    <select id="statusFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Status</option>
-                        <option value="Growing">Growing</option>
-                        <option value="Harvested">Harvested</option>
-                        <option value="Destroyed">Destroyed</option>
-                        <option value="Sent">Sent</option>
+                        <option value="Growing">🌱 Growing</option>
+                        <option value="Harvested">✂️ Harvested</option>
+                        <option value="Destroyed">🗑️ Destroyed</option>
+                        <option value="Sent">📦 Sent</option>
                     </select>
                 </div>
                 <div>
                     <label for="roomFilter">Room:</label>
-                    <select id="roomFilter" class="input">
+                    <select id="roomFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Rooms</option>
                     </select>
                 </div>
                 <div>
                     <label for="geneticsFilter">Genetics:</label>
-                    <select id="geneticsFilter" class="input">
+                    <select id="geneticsFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Genetics</option>
                     </select>
                 </div>
@@ -68,30 +69,35 @@
         </div>
 
         <!-- Plants Table -->
-        <div class="table-container">
-            <table id="plantsTable">
-                <thead>
-                    <tr>
-                        <th>Tracking #</th>
-                        <th>Tag</th>
-                        <th>Genetics</th>
-                        <th>Stage</th>
-                        <th>Room</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th>Days</th>
-                        <th>Mother</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="plantsTableBody">
-                    <!-- Data will be loaded here -->
-                </tbody>
-            </table>
-        </div>
-
-        <div id="noDataMessage" style="display: none;">
-            <p>No plants found matching the current filters.</p>
+        <div class="modern-card">
+            <h3>🌿 Your Plant Collection</h3>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="plantsTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Tracking #</th>
+                            <th>Tag</th>
+                            <th>Genetics</th>
+                            <th>Stage</th>
+                            <th>Room</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Days</th>
+                            <th>Mother</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="plantsTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="noDataMessage" style="display: none; text-align: center; padding: 3rem; color: var(--text-secondary);">
+                <h3>No Plants Found</h3>
+                <p>No plants match your current filter criteria</p>
+                <a href="receive_genetics.php" class="modern-btn">➕ Add Your First Plants</a>
+            </div>
         </div>
     </main>
 
@@ -179,11 +185,14 @@
                     <td>${daysOld}</td>
                     <td>${motherInfo}</td>
                     <td>
-                        <a href="edit_plant.php?id=${plant.id}" class="button small">Edit</a>
-                        ${plant.status === 'Growing' ? `
-                            <button onclick="quickMove(${plant.id})" class="button small">Move</button>
-                            <button onclick="harvestPlant(${plant.id})" class="button small">Harvest</button>
-                        ` : ''}
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="plant_summary.php?id=${plant.id}" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">👁️ View</a>
+                            <a href="edit_plant.php?id=${plant.id}" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">✏️ Edit</a>
+                            ${plant.status === 'Growing' ? `
+                                <button onclick="quickMove(${plant.id})" class="modern-btn" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">🔄 Move</button>
+                                <button onclick="harvestPlant(${plant.id})" class="modern-btn" style="font-size: 0.8rem; padding: 0.5rem 0.75rem; background: var(--accent-success);">✂️ Harvest</button>
+                            ` : ''}
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(row);
@@ -204,7 +213,48 @@
             }
 
             if (confirm(`Move plant to ${nextStage} stage?`)) {
-                window.location.href = `move_plants.php?plant_id=${plantId}&stage=${nextStage}`;
+                // Get available rooms for the target stage
+                fetch('get_rooms.php')
+                    .then(response => response.json())
+                    .then(rooms => {
+                        const targetRooms = rooms.filter(room => room.room_type === nextStage || room.room_type === 'General');
+                        
+                        if (targetRooms.length === 0) {
+                            showStatusMessage(`No ${nextStage} rooms available. Please create a ${nextStage} room first.`, 'error');
+                            return;
+                        }
+                        
+                        // Use the first available room
+                        const targetRoom = targetRooms[0].id;
+                        
+                        const formData = new FormData();
+                        formData.append('plants', JSON.stringify([plant.id]));
+                        formData.append('target_stage', nextStage);
+                        formData.append('target_room', targetRoom);
+                        formData.append('current_stage', plant.growth_stage);
+                        
+                        fetch('move_plants.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showStatusMessage(`Plant moved to ${nextStage} stage successfully`, 'success');
+                                loadAllPlants();
+                            } else {
+                                showStatusMessage('Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showStatusMessage('Error moving plant', 'error');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading rooms:', error);
+                        showStatusMessage('Error loading rooms', 'error');
+                    });
             }
         }
 

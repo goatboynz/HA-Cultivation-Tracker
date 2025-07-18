@@ -192,7 +192,46 @@
 
         function moveToVeg(plantId) {
             if (confirm('Move this clone to vegetative stage?')) {
-                window.location.href = `move_plants.php?plant_id=${plantId}&stage=Veg`;
+                // First get available veg rooms
+                fetch('get_rooms_by_type.php?type=Veg')
+                    .then(response => response.json())
+                    .then(rooms => {
+                        if (rooms.length === 0) {
+                            showStatusMessage('No vegetative rooms available. Please create a Veg room first.', 'error');
+                            return;
+                        }
+                        
+                        // Use the first available veg room
+                        const targetRoom = rooms[0].id;
+                        
+                        const formData = new FormData();
+                        formData.append('plants', JSON.stringify([plantId]));
+                        formData.append('target_stage', 'Veg');
+                        formData.append('target_room', targetRoom);
+                        formData.append('current_stage', 'Clone');
+                        
+                        fetch('move_plants.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showStatusMessage('Plant moved to vegetative stage successfully', 'success');
+                                loadClones();
+                            } else {
+                                showStatusMessage('Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showStatusMessage('Error moving plant', 'error');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading rooms:', error);
+                        showStatusMessage('Error loading rooms', 'error');
+                    });
             }
         }
 

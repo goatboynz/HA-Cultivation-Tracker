@@ -18,30 +18,51 @@ try {
         throw new Exception('Missing required parameters');
     }
     
-    if (!in_array($targetStage, ['Clone', 'Veg', 'Flower'])) {
+    if (!in_array($targetStage, ['Clone', 'Veg', 'Flower', 'Mother'])) {
         throw new Exception('Invalid target stage');
     }
     
     $pdo->beginTransaction();
     
     foreach ($plants as $plant) {
-        $sql = "UPDATE Plants 
-                SET growth_stage = ?, 
-                    room_id = ?, 
-                    date_stage_changed = CURRENT_TIMESTAMP 
-                WHERE genetics_id = ? 
-                AND room_id = ? 
-                AND growth_stage = ? 
-                AND status = 'Growing'";
-        
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            $targetStage,
-            $targetRoom,
-            $plant['genetics_id'],
-            $plant['current_room_id'],
-            $currentStage
-        ]);
+        // Handle different plant data structures
+        if (is_array($plant) && isset($plant['genetics_id'])) {
+            // Bulk move format from stage pages
+            $sql = "UPDATE Plants 
+                    SET growth_stage = ?, 
+                        room_id = ?, 
+                        date_stage_changed = CURRENT_TIMESTAMP 
+                    WHERE genetics_id = ? 
+                    AND room_id = ? 
+                    AND growth_stage = ? 
+                    AND status = 'Growing'";
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                $targetStage,
+                $targetRoom,
+                $plant['genetics_id'],
+                $plant['current_room_id'],
+                $currentStage
+            ]);
+        } else {
+            // Individual plant ID format from all_plants page
+            $plantId = is_array($plant) ? $plant['id'] : $plant;
+            
+            $sql = "UPDATE Plants 
+                    SET growth_stage = ?, 
+                        room_id = ?, 
+                        date_stage_changed = CURRENT_TIMESTAMP 
+                    WHERE id = ? 
+                    AND status = 'Growing'";
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                $targetStage,
+                $targetRoom,
+                $plantId
+            ]);
+        }
     }
     
     $pdo->commit();
