@@ -111,17 +111,32 @@
         }
 
         function loadMotherRooms() {
-            fetch('get_rooms_by_type.php?type=Mother')
+            // Load all rooms and show them with their types
+            fetch('get_all_rooms.php')
                 .then(response => response.json())
                 .then(rooms => {
                     const select = document.getElementById('roomName');
                     select.innerHTML = '<option value="" disabled selected>Select Room</option>';
-                    rooms.forEach(room => {
+                    
+                    if (rooms && rooms.length > 0) {
+                        rooms.forEach(room => {
+                            const option = document.createElement('option');
+                            option.value = room.id;
+                            option.textContent = `${room.name} (${room.room_type})`;
+                            select.appendChild(option);
+                        });
+                    } else {
                         const option = document.createElement('option');
-                        option.value = room.id;
-                        option.textContent = room.name;
+                        option.value = '';
+                        option.textContent = 'No rooms available - Please add rooms first';
+                        option.disabled = true;
                         select.appendChild(option);
-                    });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading rooms:', error);
+                    const select = document.getElementById('roomName');
+                    select.innerHTML = '<option value="" disabled selected>Error loading rooms</option>';
                 });
         }
 
