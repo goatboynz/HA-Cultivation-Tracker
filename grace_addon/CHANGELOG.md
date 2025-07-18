@@ -2,6 +2,28 @@
 
 All notable changes to the MediFlower Cultivation Tracker addon will be documented in this file.
 
+## [2.4.0] - 2025-01-18
+
+### 🎨 Complete Modern Theme Implementation
+- **All Pages Updated**: Applied modern dark theme to all plant, genetics, and room management pages
+- **Consistent Design**: Professional dark theme inspired by modern dashboard designs
+- **Enhanced UX**: Modern cards, hover effects, and smooth animations throughout
+- **Better Navigation**: Updated navigation with emoji icons and improved dropdowns
+- **Responsive Design**: Mobile-friendly layouts that work on all devices
+
+### ✨ New Features
+- Modern card-based layouts for all management pages
+- Enhanced action buttons with icons and better styling
+- Improved form designs with modern input styling
+- Better empty states with helpful messaging
+- Consistent color scheme using CSS variables
+
+### 🔧 Technical Improvements
+- Simplified addon installation (removed complex Docker workflows)
+- Better Home Assistant integration
+- Improved responsive design
+- Enhanced accessibility
+
 ## [2.1.0] - 2025-01-18
 
 ### 🎉 Major UI/UX Overhaul
