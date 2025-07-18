@@ -16,6 +16,7 @@ ingress: true
 ingress_port: 8420
 startup: application
 webui: "[PROTO:ssl]://[HOST]:[PORT:8420]"
+image: "ghcr.io/goatboynz/grace-addon/{arch}"
 
 map:
   - type: addon_config
