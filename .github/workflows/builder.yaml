@@ -31,13 +31,13 @@ jobs:
         run: |
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
              echo "build_arch=true" >> $GITHUB_OUTPUT;
-             echo "BUILD_ARGS=" >> $GITHUB_ENV;
            else
              echo "${{ matrix.arch }} is not a valid arch for grace_addon, skipping build";
              echo "build_arch=false" >> $GITHUB_OUTPUT;
           fi
 
       - name: Login to GitHub Container Registry
+        if: steps.check.outputs.build_arch == 'true'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -49,9 +49,7 @@ jobs:
         uses: home-assistant/builder@2024.03.5
         with:
           args: |
-            ${{ env.BUILD_ARGS }} \
             --${{ matrix.arch }} \
             --target /data/grace_addon \
-            --image "ha-cultivation-tracker" \
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
