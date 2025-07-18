@@ -6,6 +6,10 @@ on:
       - main
       - master
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: grace-addon
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,6 +35,7 @@ jobs:
         run: |
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
              echo "build_arch=true" >> $GITHUB_OUTPUT;
+             echo "Building for architecture: ${{ matrix.arch }}"
            else
              echo "${{ matrix.arch }} is not a valid arch for grace_addon, skipping build";
              echo "build_arch=false" >> $GITHUB_OUTPUT;
@@ -40,17 +45,28 @@ jobs:
         if: steps.check.outputs.build_arch == 'true'
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build grace_addon add-on
+      - name: Build and push grace_addon add-on
         if: steps.check.outputs.build_arch == 'true'
         uses: home-assistant/builder@2024.03.5
         with:
           args: |
             --${{ matrix.arch }} \
             --target /data/grace_addon \
-            --image "grace-addon" \
-            --docker-hub "ghcr.io/${{ github.repository_owner }}" \
+            --image "${{ env.IMAGE_NAME }}" \
+            --docker-hub "${{ env.REGISTRY }}/${{ github.repository_owner }}" \
             --addon
+
+      - name: Make package public
+        if: steps.check.outputs.build_arch == 'true'
+        run: |
+          echo "Setting package visibility to public..."
+          curl -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/user/packages/container/${{ env.IMAGE_NAME }}/versions \
+            -d '{"visibility":"public"}' || echo "Package visibility update failed or package doesn't exist yet"
