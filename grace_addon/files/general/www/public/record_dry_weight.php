@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
-    <title>GRACe - Record Flower Transaction</title> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css">
+    <title>CultivationTracker - Record Flower Transaction</title> 
 </head>
 <body>
     <header class="container-fluid">
@@ -17,44 +18,60 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div> 
 
-        <h1>Record Flower Transaction</h1>
-
-	<p><small>If you are harvesting flower, receiving a sample, destroying, or sending off for testing, you can do it all from here.</small></p>
-
-        <form id="recordFlowerTransactionForm" class="form" action="record_flower_transaction.php" method="post">
-            <label for="geneticsName">Genetics:</label>
-            <select id="geneticsName" name="geneticsName" class="input" required>
-                <option value="" disabled selected>Select Genetics</option>
-            </select>
-
-            <label for="weight">Weight (grams):</label>
-            <input type="number" id="weight" name="weight" class="input" min="0.01" step="0.01" required>
-
-            <label for="transactionType">Transaction Type:</label>
-            <select id="transactionType" name="transactionType" class="input" required>
-                <option value="Add">Add</option>
-                <option value="Subtract">Subtract</option>
-            </select>
-
-            <label for="reason">Reason:</label>
-            <select id="reason" name="reason" class="input" required>
-                <option value="" disabled selected>Select Reason</option>
-            </select>
-
-            <div id="companySelection" style="display: none;">
-                <label for="companyId">Company:</label>
-                <select id="companyId" name="companyId" class="input">
-                    <option value="" disabled selected>Select Company</option>
-                </select>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1>⚖️ Record Flower Transaction</h1>
+                <p style="color: var(--text-secondary); margin: 0;">Track flower weight changes for harvest, testing, destruction, or external transfers</p>
             </div>
+        </div>
 
-            <div id="otherReasonSection" style="display: none;">
-                <label for="otherReason">Other Reason:</label>
-                <textarea id="otherReason" name="otherReason" class="input" rows="3"></textarea>
-            </div>
+        <div class="modern-card">
+            <h3>📝 Transaction Details</h3>
+            <form id="recordFlowerTransactionForm" action="record_flower_transaction.php" method="post" style="margin-top: 1rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label for="geneticsName">Genetics:</label>
+                        <select id="geneticsName" name="geneticsName" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);" required>
+                            <option value="" disabled selected>Select Genetics</option>
+                        </select>
+                    </div>
 
-            <button type="submit" class="button">Record Transaction</button>
-        </form>
+                    <div>
+                        <label for="weight">Weight (grams):</label>
+                        <input type="number" id="weight" name="weight" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);" min="0.01" step="0.01" required>
+                    </div>
+
+                    <div>
+                        <label for="transactionType">Transaction Type:</label>
+                        <select id="transactionType" name="transactionType" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);" required>
+                            <option value="Add">➕ Add</option>
+                            <option value="Subtract">➖ Subtract</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="reason">Reason:</label>
+                        <select id="reason" name="reason" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);" required>
+                            <option value="" disabled selected>Select Reason</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="companySelection" style="display: none; margin-bottom: 1rem;">
+                    <label for="companyId">Company:</label>
+                    <select id="companyId" name="companyId" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
+                        <option value="" disabled selected>Select Company</option>
+                    </select>
+                </div>
+
+                <div id="otherReasonSection" style="display: none; margin-bottom: 1rem;">
+                    <label for="otherReason">Other Reason:</label>
+                    <textarea id="otherReason" name="otherReason" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="modern-btn">💾 Record Transaction</button>
+            </form>
+        </div>
     </main>
 
     <script src="js/growcart.js"></script> 

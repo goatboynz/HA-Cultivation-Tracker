@@ -189,7 +189,48 @@
 
         function moveToFlower(plantId) {
             if (confirm('Move this plant to flowering stage?')) {
-                window.location.href = `move_plants.php?plant_id=${plantId}&stage=Flower`;
+                // Get available flower rooms
+                fetch('get_rooms.php')
+                    .then(response => response.json())
+                    .then(rooms => {
+                        const flowerRooms = rooms.filter(room => room.room_type === 'Flower' || room.room_type === 'General');
+                        
+                        if (flowerRooms.length === 0) {
+                            showStatusMessage('No flower rooms available. Please create a Flower room first.', 'error');
+                            return;
+                        }
+                        
+                        // Use the first available flower room
+                        const targetRoom = flowerRooms[0].id;
+                        
+                        const formData = new FormData();
+                        formData.append('plants', JSON.stringify([plantId]));
+                        formData.append('target_stage', 'Flower');
+                        formData.append('target_room', targetRoom);
+                        formData.append('current_stage', 'Veg');
+                        
+                        fetch('move_plants.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showStatusMessage('Plant moved to flowering stage successfully', 'success');
+                                loadVegPlants();
+                            } else {
+                                showStatusMessage('Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showStatusMessage('Error moving plant', 'error');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading rooms:', error);
+                        showStatusMessage('Error loading rooms', 'error');
+                    });
             }
         }
 

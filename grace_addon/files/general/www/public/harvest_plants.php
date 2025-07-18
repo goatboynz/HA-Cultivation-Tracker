@@ -7,7 +7,8 @@
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="css/growcart.css">
-    <title>GRACe - Harvest/Destroy/Send Plants</title>
+    <link rel="stylesheet" href="css/modern-theme.css">
+    <title>CultivationTracker - Harvest/Destroy/Send Plants</title>
 </head>
 <body>
     <header class="container-fluid">
@@ -15,38 +16,63 @@
     </header>
 
     <main class="container">
-        <h1>Harvest/Destroy/Send Plants</h1>
-
-        <p><small>Manage plant actions here.</small></p>
-
-        <label for="action">Action:</label>
-        <select id="action" name="action" class="input" required>
-            <option value="harvest">Harvest</option>
-            <option value="destroy">Destroy</option>
-            <option value="send">Send External</option>
-        </select>
-
-        <div id="companySelection" style="display: none;">
-            <label for="companyId">Company:</label>
-            <select id="companyId" name="companyId" class="input">
-                <option value="" disabled selected>Select Company</option>
-            </select>
+        <div id="statusMessage" class="status-message" style="display: none;"></div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1>✂️ Harvest/Destroy/Send Plants</h1>
+                <p style="color: var(--text-secondary); margin: 0;">Process plants for harvest, destruction, or external transfer</p>
+            </div>
         </div>
 
-        <table id="plantsTable" class="table">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" id="selectAllCheckbox"></th>
-                    <th>Genetics Name</th>
-                    <th>Age (Days)</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <!-- Action Selection -->
+        <div class="modern-card" style="margin-bottom: 2rem;">
+            <h3>🎯 Select Action</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div>
+                    <label for="action">Action:</label>
+                    <select id="action" name="action" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);" required>
+                        <option value="harvest">✂️ Harvest</option>
+                        <option value="destroy">🗑️ Destroy</option>
+                        <option value="send">📦 Send External</option>
+                    </select>
+                </div>
+                
+                <div id="companySelection" style="display: none;">
+                    <label for="companyId">Company:</label>
+                    <select id="companyId" name="companyId" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
+                        <option value="" disabled selected>Select Company</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
-        <button type="button" class="button" id="processSelectedButton">Process Selected</button>
+        <!-- Plants Table -->
+        <div class="modern-card">
+            <h3>🌿 Available Plants</h3>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="plantsTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAllCheckbox"></th>
+                            <th>Genetics Name</th>
+                            <th>Age (Days)</th>
+                            <th>Status</th>
+                            <th>Room</th>
+                            <th>Stage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <button type="button" class="modern-btn" id="processSelectedButton">
+                    <span id="processButtonText">Process Selected</span>
+                </button>
+            </div>
+        </div>
     </main>
 
     <script src="js/growcart.js"></script>
@@ -75,10 +101,14 @@
                     const nameCell = row.insertCell();
                     const ageCell = row.insertCell();
                     const statusCell = row.insertCell();
+                    const roomCell = row.insertCell();
+                    const stageCell = row.insertCell();
 
                     nameCell.textContent = plant.geneticsName;
                     ageCell.textContent = plant.age;
-                    statusCell.textContent = plant.status;
+                    statusCell.innerHTML = `<span class="status-badge ${plant.status.toLowerCase()}">${plant.status}</span>`;
+                    roomCell.textContent = plant.room_name || 'Unassigned';
+                    stageCell.innerHTML = `<span class="stage-badge ${plant.growth_stage.toLowerCase()}">${plant.growth_stage}</span>`;
                 });
             })
             .catch(error => console.error('Error fetching plant data:', error));
@@ -132,7 +162,35 @@
         // Show/Hide company selection based on action
         actionDropdown.addEventListener('change', () => {
             companySelection.style.display = actionDropdown.value === 'send' ? 'block' : 'none';
+            
+            // Update button text based on action
+            const buttonText = document.getElementById('processButtonText');
+            switch(actionDropdown.value) {
+                case 'harvest':
+                    buttonText.textContent = '✂️ Harvest Selected';
+                    break;
+                case 'destroy':
+                    buttonText.textContent = '🗑️ Destroy Selected';
+                    break;
+                case 'send':
+                    buttonText.textContent = '📦 Send Selected';
+                    break;
+                default:
+                    buttonText.textContent = 'Process Selected';
+            }
         });
+
+        function showStatusMessage(message, type) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = message;
+            statusMessage.classList.add(type);
+            statusMessage.style.display = 'block';
+
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+                statusMessage.classList.remove(type);
+            }, 5000);
+        }
 
         // Fetch and populate company dropdown
         fetch('get_companies.php')

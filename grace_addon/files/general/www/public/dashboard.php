@@ -159,11 +159,25 @@
                         <p>Create new clones from mothers</p>
                     </div>
                 </a>
-                <a href="move_plants.php" class="quick-action">
-                    <span class="quick-action-icon">📦</span>
+                <a href="record_dry_weight.php" class="quick-action">
+                    <span class="quick-action-icon">⚖️</span>
                     <div class="quick-action-content">
-                        <h3>Move Plants</h3>
-                        <p>Transfer plants between rooms</p>
+                        <h3>Record Weights</h3>
+                        <p>Track flower transactions</p>
+                    </div>
+                </a>
+                <a href="manage_rooms.php" class="quick-action">
+                    <span class="quick-action-icon">🏠</span>
+                    <div class="quick-action-content">
+                        <h3>Manage Rooms</h3>
+                        <p>Set up cultivation spaces</p>
+                    </div>
+                </a>
+                <a href="seed_stock.php" class="quick-action">
+                    <span class="quick-action-icon">🌰</span>
+                    <div class="quick-action-content">
+                        <h3>Seed Stock</h3>
+                        <p>Manage seed inventory</p>
                     </div>
                 </a>
                 <a href="reports.php" class="quick-action">

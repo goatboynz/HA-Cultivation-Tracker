@@ -31,6 +31,8 @@
                         <a href="plants_veg.php">🌱 Veg Stage</a>
                         <a href="plants_flower.php">🌸 Flower Stage</a>
                         <a href="plants_mother.php">👑 Mother Plants</a>
+                        <a href="take_clones.php">🔄 Take Clones</a>
+                        <a href="harvest_plants.php">✂️ Harvest Plants</a>
                         <a href="tracking.php">🔍 Plant Tracking</a>
                     </div>
                 </div>
@@ -55,7 +57,19 @@
                     </button>
                     <div class="dropdown-menu">
                         <a href="manage_rooms.php">🏠 Manage Rooms</a>
-                        <a href="move_plants_room.php">📦 Move Plants</a>
+                    </div>
+                </div>
+                
+                <div class="nav-dropdown">
+                    <button class="nav-item dropdown-toggle">
+                        <span class="nav-icon">⚖️</span>
+                        Operations
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="record_dry_weight.php">⚖️ Record Weights</a>
+                        <a href="generate_shipping_manifest.php">📦 Shipping</a>
+                        <a href="current_dried_flower.php">🏺 Dried Flower</a>
                     </div>
                 </div>
                 

@@ -2,6 +2,36 @@
 
 All notable changes to the MediFlower Cultivation Tracker addon will be documented in this file.
 
+## [2.6.0] - 2025-01-19
+
+### 🎯 Enhanced Navigation & Dashboard
+- **Expanded Dashboard Quick Actions**: Added Record Weights, Manage Rooms, and Seed Stock management
+- **Enhanced Navigation Bar**: Added Operations dropdown with weight recording, shipping, and dried flower management
+- **Improved Plant Management**: Added Take Clones and Harvest Plants to main navigation
+- **Better Organization**: Streamlined navigation with logical groupings and emoji icons
+
+### 🔧 Critical Bug Fixes
+- **Fixed Veg to Flower Movement**: Resolved 500 error when moving plants from vegetative to flowering stage
+- **Updated POST Requests**: Fixed all plant movement operations to use proper POST requests instead of GET
+
+### 🎨 Modern Theme Expansion
+- **Harvest Plants Page**: Complete modern theme makeover with cards, enhanced layout, and better functionality
+- **Take Clones Page**: Modern design with improved form layout and user experience
+- **Record Dry Weight Page**: Modern cards and responsive grid layout for weight transactions
+- **Seed Stock Management**: Enhanced with modern theme consistency
+
+### ✨ New Features
+- **Comprehensive Plant Summary**: New detailed plant view with timeline, photos, and harvest information
+- **Enhanced Quick Actions**: 8 organized quick action buttons on dashboard for common tasks
+- **Better Accessibility**: All major functionality now easily accessible from dashboard and navigation
+- **Improved User Flow**: Logical navigation paths between related functions
+
+### 🚀 Technical Improvements
+- **Consistent Styling**: Modern theme applied across all key management pages
+- **Enhanced Forms**: Better form layouts with responsive grids and modern inputs
+- **Improved Error Handling**: Better user feedback and status messages
+- **Mobile Responsive**: All updated pages work seamlessly on mobile devices
+
 ## [2.5.0] - 2025-01-19
 
 ### 🔧 Critical Bug Fixes
