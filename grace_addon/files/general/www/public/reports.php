@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>CultivationTracker - Reports</title> 
 </head>
 <body>
@@ -15,79 +16,79 @@
     </header>
 
     <main class="container">
-        <h1>Reports & Analytics</h1>
-        <p><small>Generate comprehensive reports for your cultivation operation</small></p>
+        <div style="margin-bottom: 2rem;">
+            <h1>📊 Reports & Analytics</h1>
+            <p style="color: var(--text-secondary);">Generate comprehensive reports for your cultivation operation</p>
+        </div>
 
-        <div class="grid">
+        <div class="dashboard-grid">
             <!-- Plant Reports -->
-            <div class="card">
-                <h3>Plant Reports</h3>
-                <div class="report-buttons">
-                    <button onclick="generateReport('plants_all')" class="button">All Plants</button>
-                    <button onclick="generateReport('plants_by_stage')" class="button">Plants by Stage</button>
-                    <button onclick="generateReport('plants_by_room')" class="button">Plants by Room</button>
-                    <button onclick="generateReport('mother_plants')" class="button">Mother Plants</button>
-                    <button onclick="generateReport('clone_tracking')" class="button">Clone Tracking</button>
+            <div class="modern-card">
+                <h3>🌱 Plant Reports</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                    <button onclick="generateReport('plants_all')" class="modern-btn">All Plants</button>
+                    <button onclick="generateReport('plants_by_stage')" class="modern-btn secondary">Plants by Stage</button>
+                    <button onclick="generateReport('plants_by_room')" class="modern-btn secondary">Plants by Room</button>
+                    <button onclick="generateReport('mother_plants')" class="modern-btn secondary">Mother Plants</button>
+                    <button onclick="generateReport('clone_tracking')" class="modern-btn secondary">Clone Tracking</button>
                 </div>
             </div>
 
             <!-- Room Reports -->
-            <div class="card">
-                <h3>Room Reports</h3>
-                <div class="report-buttons">
-                    <button onclick="generateReport('room_utilization')" class="button">Room Utilization</button>
-                    <button onclick="generateReport('room_capacity')" class="button">Room Capacity</button>
-                    <button onclick="generateReport('room_timeline')" class="button">Room Timeline</button>
+            <div class="modern-card">
+                <h3>🏠 Room Reports</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                    <button onclick="generateReport('room_utilization')" class="modern-btn">Room Utilization</button>
+                    <button onclick="generateReport('room_capacity')" class="modern-btn secondary">Room Capacity</button>
+                    <button onclick="generateReport('room_timeline')" class="modern-btn secondary">Room Timeline</button>
                 </div>
             </div>
 
             <!-- Genetics Reports -->
-            <div class="card">
-                <h3>Genetics Reports</h3>
-                <div class="report-buttons">
-                    <button onclick="generateReport('genetics_performance')" class="button">Genetics Performance</button>
-                    <button onclick="generateReport('genetics_inventory')" class="button">Genetics Inventory</button>
-                    <button onclick="generateReport('harvest_summary')" class="button">Harvest Summary</button>
+            <div class="modern-card">
+                <h3>🧬 Genetics Reports</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                    <button onclick="generateReport('genetics_performance')" class="modern-btn">Genetics Performance</button>
+                    <button onclick="generateReport('genetics_inventory')" class="modern-btn secondary">Genetics Inventory</button>
+                    <button onclick="generateReport('harvest_summary')" class="modern-btn secondary">Harvest Summary</button>
                 </div>
             </div>
 
             <!-- Plant Count Reports -->
-            <div class="card">
+            <div class="modern-card">
                 <h3>📊 Plant Count Reports</h3>
-                <p><small>Export total plant counts for different time periods</small></p>
-                <div class="report-buttons">
-                    <button onclick="generatePlantCountReport('monthly')" class="button">Monthly Plant Counts</button>
-                    <button onclick="generatePlantCountReport('6month')" class="button">6-Month Plant Counts</button>
-                    <button onclick="generatePlantCountReport('yearly')" class="button">Yearly Plant Counts</button>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Export total plant counts for different time periods</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                    <button onclick="generatePlantCountReport('monthly')" class="modern-btn">Monthly Plant Counts</button>
+                    <button onclick="generatePlantCountReport('6month')" class="modern-btn secondary">6-Month Plant Counts</button>
+                    <button onclick="generatePlantCountReport('yearly')" class="modern-btn secondary">Yearly Plant Counts</button>
                 </div>
             </div>
 
             <!-- Timeline Reports -->
-            <div class="card">
-                <h3>Timeline Reports</h3>
-                <div class="report-buttons">
-                    <button onclick="generateReport('plant_lifecycle')" class="button">Plant Lifecycle</button>
-                    <button onclick="generateReport('stage_transitions')" class="button">Stage Transitions</button>
-                    <button onclick="generateReport('monthly_summary')" class="button">Monthly Summary</button>
+            <div class="modern-card">
+                <h3>⏰ Timeline Reports</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                    <button onclick="generateReport('plant_lifecycle')" class="modern-btn">Plant Lifecycle</button>
+                    <button onclick="generateReport('stage_transitions')" class="modern-btn secondary">Stage Transitions</button>
+                    <button onclick="generateReport('monthly_summary')" class="modern-btn secondary">Monthly Summary</button>
                 </div>
             </div>
         </div>
 
         <!-- Report Display Area -->
-        <div id="reportContainer" style="display: none;">
-            <div class="card">
-                <div class="grid">
-                    <div>
-                        <h3 id="reportTitle">Report Results</h3>
-                    </div>
-                    <div style="text-align: right;">
-                        <button id="downloadCsvBtn" class="btn btn-primary">📊 Download CSV</button>
-                        <button id="downloadExcelBtn" class="btn btn-success">📈 Download Excel</button>
-                        <button onclick="closeReport()" class="btn btn-secondary">Close</button>
+        <div id="reportContainer" style="display: none; margin-top: 2rem;">
+            <div class="modern-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 id="reportTitle">Report Results</h3>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button id="downloadCsvBtn" class="modern-btn secondary">📊 Download CSV</button>
+                        <button id="downloadExcelBtn" class="modern-btn secondary">📈 Download Excel</button>
+                        <button onclick="closeReport()" class="modern-btn secondary">Close</button>
                     </div>
                 </div>
-                <div class="table-container">
-                    <table id="reportTable">
+                <div style="overflow-x: auto;">
+                    <table id="reportTable" class="modern-table">
                         <thead id="reportTableHead">
                         </thead>
                         <tbody id="reportTableBody">
@@ -98,21 +99,21 @@
         </div>
 
         <!-- Custom Date Range -->
-        <div class="card">
-            <h3>Custom Date Range Reports</h3>
-            <form id="dateRangeForm">
-                <div class="grid">
+        <div class="modern-card" style="margin-top: 2rem;">
+            <h3>📅 Custom Date Range Reports</h3>
+            <form id="dateRangeForm" class="modern-form" style="background: none; border: none; padding: 0; box-shadow: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
                     <div>
                         <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" class="input">
+                        <input type="date" id="startDate" name="startDate">
                     </div>
                     <div>
                         <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" class="input">
+                        <input type="date" id="endDate" name="endDate">
                     </div>
                     <div>
                         <label for="reportType">Report Type:</label>
-                        <select id="reportType" name="reportType" class="input">
+                        <select id="reportType" name="reportType">
                             <option value="plants_created">Plants Created</option>
                             <option value="plants_harvested">Plants Harvested</option>
                             <option value="stage_changes">Stage Changes</option>
@@ -120,7 +121,7 @@
                         </select>
                     </div>
                 </div>
-                <button type="button" onclick="generateDateRangeReport()" class="button">Generate Report</button>
+                <button type="button" onclick="generateDateRangeReport()" class="modern-btn">Generate Custom Report</button>
             </form>
         </div>
     </main>

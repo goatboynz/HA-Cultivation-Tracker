@@ -8,6 +8,7 @@
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css">
     <title>GRACe - Manage Companies</title>
     <style>
         .company-card {
@@ -37,7 +38,10 @@
     </header>
 
     <main class="container">
-        <h1>Manage Companies</h1>
+        <div style="margin-bottom: 2rem;">
+            <h1>🏢 Manage Companies</h1>
+            <p style="color: var(--text-secondary);">View and edit your verified companies</p>
+        </div>
         
         <?php
         try {
@@ -46,59 +50,88 @@
             $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             if (empty($companies)) {
-                echo '<p>No companies found. <a href="add_verified_company.php">Add your first company</a>.</p>';
+                echo '<div class="modern-card" style="text-align: center; padding: 3rem;">';
+                echo '<h3>No Companies Found</h3>';
+                echo '<p style="color: var(--text-secondary); margin-bottom: 2rem;">Get started by adding your first verified company</p>';
+                echo '<a href="add_verified_company.php" class="modern-btn">Add Your First Company</a>';
+                echo '</div>';
             } else {
+                echo '<div class="dashboard-grid">';
                 foreach ($companies as $company) {
-                    echo '<div class="company-card">';
+                    echo '<div class="modern-card">';
                     echo '<div class="company-display" id="display-' . $company['id'] . '">';
-                    echo '<h3>' . htmlspecialchars($company['name']) . '</h3>';
-                    echo '<p><strong>License:</strong> ' . htmlspecialchars($company['license_number']) . '</p>';
+                    echo '<h3>🏢 ' . htmlspecialchars($company['name']) . '</h3>';
+                    echo '<div style="margin: 1rem 0;">';
+                    echo '<p style="margin: 0.5rem 0;"><strong>License:</strong> <span style="color: var(--accent-primary);">' . htmlspecialchars($company['license_number']) . '</span></p>';
                     if ($company['address']) {
-                        echo '<p><strong>Address:</strong> ' . htmlspecialchars($company['address']) . '</p>';
+                        echo '<p style="margin: 0.5rem 0;"><strong>Address:</strong> ' . htmlspecialchars($company['address']) . '</p>';
                     }
                     if ($company['primary_contact_name']) {
-                        echo '<p><strong>Contact:</strong> ' . htmlspecialchars($company['primary_contact_name']) . '</p>';
+                        echo '<p style="margin: 0.5rem 0;"><strong>Contact:</strong> ' . htmlspecialchars($company['primary_contact_name']) . '</p>';
                     }
                     if ($company['primary_contact_email']) {
-                        echo '<p><strong>Email:</strong> ' . htmlspecialchars($company['primary_contact_email']) . '</p>';
+                        echo '<p style="margin: 0.5rem 0;"><strong>Email:</strong> <a href="mailto:' . htmlspecialchars($company['primary_contact_email']) . '" style="color: var(--accent-primary);">' . htmlspecialchars($company['primary_contact_email']) . '</a></p>';
                     }
                     if ($company['primary_contact_phone']) {
-                        echo '<p><strong>Phone:</strong> ' . htmlspecialchars($company['primary_contact_phone']) . '</p>';
+                        echo '<p style="margin: 0.5rem 0;"><strong>Phone:</strong> <a href="tel:' . htmlspecialchars($company['primary_contact_phone']) . '" style="color: var(--accent-primary);">' . htmlspecialchars($company['primary_contact_phone']) . '</a></p>';
                     }
+                    echo '</div>';
                     
-                    echo '<div class="company-actions">';
-                    echo '<button onclick="editCompany(' . $company['id'] . ')" class="secondary">Edit</button>';
-                    echo '<button onclick="deleteCompany(' . $company['id'] . ', \'' . htmlspecialchars($company['name']) . '\')" class="contrast outline">Delete</button>';
+                    echo '<div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">';
+                    echo '<button onclick="editCompany(' . $company['id'] . ')" class="modern-btn secondary">✏️ Edit</button>';
+                    echo '<button onclick="deleteCompany(' . $company['id'] . ', \'' . htmlspecialchars($company['name']) . '\')" class="modern-btn secondary" style="color: var(--accent-error); border-color: var(--accent-error);">🗑️ Delete</button>';
                     echo '</div>';
                     echo '</div>';
                     
                     // Edit form (hidden by default)
-                    echo '<div class="edit-form" id="edit-' . $company['id'] . '">';
-                    echo '<h4>Edit Company</h4>';
+                    echo '<div class="edit-form modern-form" id="edit-' . $company['id'] . '" style="display: none; margin-top: 1rem;">';
+                    echo '<h4>✏️ Edit Company</h4>';
                     echo '<form onsubmit="updateCompany(event, ' . $company['id'] . ')">';
-                    echo '<label>Company Name: <input type="text" name="name" value="' . htmlspecialchars($company['name']) . '" required></label>';
-                    echo '<label>License Number: <input type="text" name="license_number" value="' . htmlspecialchars($company['license_number']) . '" required></label>';
-                    echo '<label>Address: <textarea name="address">' . htmlspecialchars($company['address']) . '</textarea></label>';
-                    echo '<label>Contact Name: <input type="text" name="primary_contact_name" value="' . htmlspecialchars($company['primary_contact_name']) . '"></label>';
-                    echo '<label>Contact Email: <input type="email" name="primary_contact_email" value="' . htmlspecialchars($company['primary_contact_email']) . '"></label>';
-                    echo '<label>Contact Phone: <input type="tel" name="primary_contact_phone" value="' . htmlspecialchars($company['primary_contact_phone']) . '"></label>';
-                    echo '<div style="display: flex; gap: 0.5rem; margin-top: 1rem;">';
-                    echo '<button type="submit" class="primary">Save Changes</button>';
-                    echo '<button type="button" onclick="cancelEdit(' . $company['id'] . ')" class="secondary">Cancel</button>';
+                    echo '<div style="margin-bottom: 1rem;">';
+                    echo '<label>Company Name:</label>';
+                    echo '<input type="text" name="name" value="' . htmlspecialchars($company['name']) . '" required>';
+                    echo '</div>';
+                    echo '<div style="margin-bottom: 1rem;">';
+                    echo '<label>License Number:</label>';
+                    echo '<input type="text" name="license_number" value="' . htmlspecialchars($company['license_number']) . '" required>';
+                    echo '</div>';
+                    echo '<div style="margin-bottom: 1rem;">';
+                    echo '<label>Address:</label>';
+                    echo '<textarea name="address" rows="3">' . htmlspecialchars($company['address']) . '</textarea>';
+                    echo '</div>';
+                    echo '<div style="margin-bottom: 1rem;">';
+                    echo '<label>Contact Name:</label>';
+                    echo '<input type="text" name="primary_contact_name" value="' . htmlspecialchars($company['primary_contact_name']) . '">';
+                    echo '</div>';
+                    echo '<div style="margin-bottom: 1rem;">';
+                    echo '<label>Contact Email:</label>';
+                    echo '<input type="email" name="primary_contact_email" value="' . htmlspecialchars($company['primary_contact_email']) . '">';
+                    echo '</div>';
+                    echo '<div style="margin-bottom: 1rem;">';
+                    echo '<label>Contact Phone:</label>';
+                    echo '<input type="tel" name="primary_contact_phone" value="' . htmlspecialchars($company['primary_contact_phone']) . '">';
+                    echo '</div>';
+                    echo '<div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">';
+                    echo '<button type="submit" class="modern-btn">💾 Save Changes</button>';
+                    echo '<button type="button" onclick="cancelEdit(' . $company['id'] . ')" class="modern-btn secondary">❌ Cancel</button>';
                     echo '</div>';
                     echo '</form>';
                     echo '</div>';
                     
                     echo '</div>';
                 }
+                echo '</div>';
             }
         } catch (Exception $e) {
-            echo '<p>Error loading companies: ' . htmlspecialchars($e->getMessage()) . '</p>';
+            echo '<div class="modern-card" style="border-color: var(--accent-error); background: rgba(239, 68, 68, 0.1);">';
+            echo '<h3 style="color: var(--accent-error);">⚠️ Error Loading Companies</h3>';
+            echo '<p>' . htmlspecialchars($e->getMessage()) . '</p>';
+            echo '</div>';
         }
         ?>
         
-        <div style="margin-top: 2rem;">
-            <a href="add_verified_company.php" class="primary">Add New Company</a>
+        <div style="margin-top: 2rem; text-align: center;">
+            <a href="add_verified_company.php" class="modern-btn">➕ Add New Company</a>
         </div>
     </main>
 

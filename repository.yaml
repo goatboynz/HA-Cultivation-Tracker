@@ -1,3 +1,4 @@
-name: HA Cultivation System add-on repository
-url: https://github.com/goatboynz/cultivation-system
-maintainer: Goatboynz <zak@mediflower.nz>
+name: "MediFlower Cultivation Tracker Repository"
+url: "https://github.com/goatboynz/HA-Cultivation-Tracker"
+maintainer: "Goatboynz <zak@mediflower.nz>"
+description: "Professional cannabis cultivation management system for Home Assistant"

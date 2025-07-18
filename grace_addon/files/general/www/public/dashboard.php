@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>CultivationTracker - Dashboard</title> 
 </head>
 <body>
@@ -30,59 +31,47 @@
         <section>
             <h2>🌱 Plant Overview</h2>
             <div class="dashboard-grid">
-                <div class="dashboard-card">
+                <div class="stat-card">
                     <h3>🌿 Clone Stage</h3>
-                    <div class="stat-display">
-                        <div class="stat-number" id="cloneCount">-</div>
-                        <div class="stat-label">Active Clones</div>
-                    </div>
+                    <div class="stat-number" id="cloneCount">-</div>
+                    <div class="stat-label">Active Clones</div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="cloneProgress" style="width: 0%"></div>
                     </div>
                 </div>
-                <div class="dashboard-card">
+                <div class="stat-card">
                     <h3>🌱 Vegetative Stage</h3>
-                    <div class="stat-display">
-                        <div class="stat-number" id="vegCount">-</div>
-                        <div class="stat-label">Veg Plants</div>
-                    </div>
+                    <div class="stat-number" id="vegCount">-</div>
+                    <div class="stat-label">Veg Plants</div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="vegProgress" style="width: 0%"></div>
                     </div>
                 </div>
-                <div class="dashboard-card">
+                <div class="stat-card">
                     <h3>🌸 Flowering Stage</h3>
-                    <div class="stat-display">
-                        <div class="stat-number" id="flowerCount">-</div>
-                        <div class="stat-label">Flowering Plants</div>
-                    </div>
+                    <div class="stat-number" id="flowerCount">-</div>
+                    <div class="stat-label">Flowering Plants</div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="flowerProgress" style="width: 0%"></div>
                     </div>
                 </div>
-                <div class="dashboard-card">
+                <div class="stat-card">
                     <h3>👑 Mother Plants</h3>
-                    <div class="stat-display">
-                        <div class="stat-number" id="motherCount">-</div>
-                        <div class="stat-label">Active Mothers</div>
-                    </div>
+                    <div class="stat-number" id="motherCount">-</div>
+                    <div class="stat-label">Active Mothers</div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="motherProgress" style="width: 0%"></div>
                     </div>
                 </div>
-                <div class="dashboard-card" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+                <div class="stat-card" style="background: linear-gradient(135deg, var(--accent-success), #047857);">
                     <h3>📊 Total Active</h3>
-                    <div class="stat-display">
-                        <div class="stat-number" id="totalCount" style="color: white;">-</div>
-                        <div class="stat-label" style="color: #d1fae5;">All Growing Plants</div>
-                    </div>
+                    <div class="stat-number" id="totalCount" style="color: white;">-</div>
+                    <div class="stat-label" style="color: #d1fae5;">All Growing Plants</div>
                 </div>
-                <div class="dashboard-card" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);">
+                <div class="stat-card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));">
                     <h3>🏆 This Month</h3>
-                    <div class="stat-display">
-                        <div class="stat-number" id="harvestedCount" style="color: white;">-</div>
-                        <div class="stat-label" style="color: #ddd6fe;">Plants Harvested</div>
-                    </div>
+                    <div class="stat-number" id="harvestedCount" style="color: white;">-</div>
+                    <div class="stat-label" style="color: #ddd6fe;">Plants Harvested</div>
                 </div>
             </div>
         </section>
@@ -98,8 +87,8 @@
         <!-- Ready to Harvest -->
         <section>
             <h2>⏰ Plants Ready Soon</h2>
-            <div class="dashboard-card">
-                <table id="readyToHarvestTable" style="width: 100%; margin: 0;">
+            <div class="modern-card">
+                <table id="readyToHarvestTable" class="modern-table">
                     <thead>
                         <tr>
                             <th>Genetics</th>
@@ -112,7 +101,7 @@
                     <tbody>
                     </tbody>
                 </table>
-                <p id="noReadyPlantsMessage" style="display: none; text-align: center; font-style: italic; color: #94a3b8;">No plants approaching harvest</p>
+                <p id="noReadyPlantsMessage" style="display: none; text-align: center; font-style: italic; color: var(--text-secondary);">No plants approaching harvest</p>
             </div>
         </section>
 
@@ -130,58 +119,58 @@
             <div class="quick-actions">
                 <a href="receive_genetics.php" class="quick-action">
                     <span class="quick-action-icon">➕</span>
-                    <div>
-                        <div>Add New Plants</div>
-                        <small>Start new plants from seeds or clones</small>
+                    <div class="quick-action-content">
+                        <h3>Add New Plants</h3>
+                        <p>Start new plants from seeds or clones</p>
                     </div>
                 </a>
                 <a href="plants_clone.php" class="quick-action">
                     <span class="quick-action-icon">🌿</span>
-                    <div>
-                        <div>Manage Clones</div>
-                        <small>View and manage clone stage plants</small>
+                    <div class="quick-action-content">
+                        <h3>Manage Clones</h3>
+                        <p>View and manage clone stage plants</p>
                     </div>
                 </a>
                 <a href="plants_veg.php" class="quick-action">
                     <span class="quick-action-icon">🌱</span>
-                    <div>
-                        <div>Manage Veg</div>
-                        <small>Handle vegetative stage plants</small>
+                    <div class="quick-action-content">
+                        <h3>Manage Veg</h3>
+                        <p>Handle vegetative stage plants</p>
                     </div>
                 </a>
                 <a href="plants_flower.php" class="quick-action">
                     <span class="quick-action-icon">🌸</span>
-                    <div>
-                        <div>Manage Flower</div>
-                        <small>Monitor flowering plants</small>
+                    <div class="quick-action-content">
+                        <h3>Manage Flower</h3>
+                        <p>Monitor flowering plants</p>
                     </div>
                 </a>
                 <a href="harvest_plants.php" class="quick-action">
                     <span class="quick-action-icon">✂️</span>
-                    <div>
-                        <div>Harvest Plants</div>
-                        <small>Process ready plants</small>
+                    <div class="quick-action-content">
+                        <h3>Harvest Plants</h3>
+                        <p>Process ready plants</p>
                     </div>
                 </a>
                 <a href="take_clones.php" class="quick-action">
                     <span class="quick-action-icon">🔄</span>
-                    <div>
-                        <div>Take Clones</div>
-                        <small>Create new clones from mothers</small>
+                    <div class="quick-action-content">
+                        <h3>Take Clones</h3>
+                        <p>Create new clones from mothers</p>
                     </div>
                 </a>
                 <a href="move_plants.php" class="quick-action">
                     <span class="quick-action-icon">📦</span>
-                    <div>
-                        <div>Move Plants</div>
-                        <small>Transfer plants between rooms</small>
+                    <div class="quick-action-content">
+                        <h3>Move Plants</h3>
+                        <p>Transfer plants between rooms</p>
                     </div>
                 </a>
                 <a href="reports.php" class="quick-action">
                     <span class="quick-action-icon">📊</span>
-                    <div>
-                        <div>View Reports</div>
-                        <small>Generate cultivation reports</small>
+                    <div class="quick-action-content">
+                        <h3>View Reports</h3>
+                        <p>Generate cultivation reports</p>
                     </div>
                 </a>
             </div>
@@ -278,13 +267,11 @@
                         rooms.forEach(room => {
                             const count = roomCounts[room.name] || 0;
                             const card = document.createElement('div');
-                            card.className = 'dashboard-card';
+                            card.className = 'stat-card';
                             card.innerHTML = `
                                 <h3>${getRoomIcon(room.room_type)} ${room.name}</h3>
-                                <div class="stat-display">
-                                    <div class="stat-number">${count}</div>
-                                    <div class="stat-label">${room.room_type} Room</div>
-                                </div>
+                                <div class="stat-number">${count}</div>
+                                <div class="stat-label">${room.room_type} Room</div>
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: ${Math.min((count / 20) * 100, 100)}%"></div>
                                 </div>
@@ -361,14 +348,12 @@
                             genetics.slice(0, 6).forEach(genetic => {
                                 const count = geneticsCounts[genetic.name] || 0;
                                 const card = document.createElement('div');
-                                card.className = 'dashboard-card';
+                                card.className = 'stat-card';
                                 card.innerHTML = `
                                     <h3>🧬 ${genetic.name}</h3>
-                                    <div class="stat-display">
-                                        <div class="stat-number">${count}</div>
-                                        <div class="stat-label">Active Plants</div>
-                                    </div>
-                                    <small>${genetic.indica_sativa_ratio || 'Unknown ratio'}</small>
+                                    <div class="stat-number">${count}</div>
+                                    <div class="stat-label">Active Plants</div>
+                                    <small style="color: var(--text-secondary);">${genetic.indica_sativa_ratio || 'Unknown ratio'}</small>
                                 `;
                                 geneticsContainer.appendChild(card);
                             });

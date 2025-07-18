@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>CultivationTracker - Mother Plants</title> 
 </head>
 <body>
@@ -17,69 +18,70 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div>
         
-        <div class="grid">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
-                <h1>Mother Plants</h1>
-                <p><small>Manage your mother plants for clone production</small></p>
+                <h1>👑 Mother Plants</h1>
+                <p style="color: var(--text-secondary); margin: 0;">Manage your mother plants for clone production</p>
             </div>
-            <div style="text-align: right;">
-                <button onclick="showAddMotherForm()" class="button">Add Mother Plant</button>
-            </div>
+            <button onclick="showAddMotherForm()" class="modern-btn">➕ Add Mother Plant</button>
         </div>
 
         <!-- Add Mother Plant Form -->
-        <div id="addMotherForm" style="display: none;" class="card">
-            <h3>Add New Mother Plant</h3>
-            <form id="motherForm" action="handle_add_mother.php" method="post">
-                <div class="grid">
+        <div id="addMotherForm" style="display: none; margin-bottom: 2rem;" class="modern-card">
+            <h3>➕ Add New Mother Plant</h3>
+            <form id="motherForm" action="handle_add_mother.php" method="post" class="modern-form" style="background: none; border: none; padding: 0; box-shadow: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0;">
                     <div>
                         <label for="geneticsName">Genetics:</label>
-                        <select id="geneticsName" name="geneticsName" class="input" required>
+                        <select id="geneticsName" name="geneticsName" required>
                             <option value="" disabled selected>Select Genetics</option>
                         </select>
                     </div>
                     <div>
                         <label for="roomName">Room:</label>
-                        <select id="roomName" name="roomName" class="input" required>
+                        <select id="roomName" name="roomName" required>
                             <option value="" disabled selected>Select Room</option>
                         </select>
                     </div>
                 </div>
-                <div class="grid">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0;">
                     <div>
                         <label for="plantTag">Plant Tag:</label>
-                        <input type="text" id="plantTag" name="plantTag" class="input" placeholder="Optional identifier">
+                        <input type="text" id="plantTag" name="plantTag" placeholder="Optional identifier">
                     </div>
                     <div>
                         <label for="notes">Notes:</label>
-                        <input type="text" id="notes" name="notes" class="input" placeholder="Optional notes">
+                        <input type="text" id="notes" name="notes" placeholder="Optional notes">
                     </div>
                 </div>
-                <div class="grid">
-                    <button type="submit" class="button">Add Mother Plant</button>
-                    <button type="button" onclick="hideAddMotherForm()" class="button secondary">Cancel</button>
+                <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                    <button type="submit" class="modern-btn">💾 Add Mother Plant</button>
+                    <button type="button" onclick="hideAddMotherForm()" class="modern-btn secondary">❌ Cancel</button>
                 </div>
             </form>
         </div>
 
         <!-- Mother Plants Table -->
-        <div class="table-container">
-            <table id="motherPlantsTable">
-                <thead>
-                    <tr>
-                        <th>Plant Tag</th>
-                        <th>Genetics</th>
-                        <th>Room</th>
-                        <th>Date Created</th>
-                        <th>Clone Count</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="motherPlantsBody">
-                    <!-- Data will be loaded here -->
-                </tbody>
-            </table>
+        <div class="modern-card">
+            <h3>👑 Your Mother Plants</h3>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="motherPlantsTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Plant Tag</th>
+                            <th>Genetics</th>
+                            <th>Room</th>
+                            <th>Date Created</th>
+                            <th>Clone Count</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="motherPlantsBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 
@@ -157,8 +159,10 @@
                             <td>${plant.clone_count || 0}</td>
                             <td><span class="status-badge ${plant.status.toLowerCase()}">${plant.status}</span></td>
                             <td>
-                                <a href="edit_plant.php?id=${plant.id}" class="button small">Edit</a>
-                                <button onclick="takeClones(${plant.id})" class="button small">Take Clones</button>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <a href="edit_plant.php?id=${plant.id}" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">✏️ Edit</a>
+                                    <button onclick="takeClones(${plant.id})" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">🔄 Take Clones</button>
+                                </div>
                             </td>
                         `;
                         tbody.appendChild(row);
