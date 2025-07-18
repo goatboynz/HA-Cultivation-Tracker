@@ -2,6 +2,42 @@
 
 All notable changes to the MediFlower Cultivation Tracker addon will be documented in this file.
 
+## [2.7.0] - 2025-01-19
+
+### 💾 **Database Management System**
+- **Complete Backup & Restore**: Professional-grade database backup and restore functionality
+- **Database Information Display**: Real-time stats showing file size, record counts, and table details
+- **Safety Features**: Multiple confirmation dialogs and automatic backup before restore
+- **File Validation**: Ensures uploaded files are valid SQLite databases with size limits
+- **Database Health Check**: Validation tools to ensure database integrity
+
+### 🔍 **Enhanced Harvest Management**
+- **Comprehensive Plant Filtering**: Filter by stage, room, status, genetics, age, and mother plants
+- **Complete Plant Display**: Shows ALL plants (not just growing) with full details
+- **Advanced Table View**: Tracking numbers, tags, genetics, stages, rooms, status, age, and type
+- **Real-time Filter Feedback**: Live count of filtered results and selected plants
+- **Smart Selection Tools**: Select all with filtered results, clear filters button
+- **Mother Plant Identification**: Visual indicators for mother plants vs regular plants
+
+### ✨ **User Experience Improvements**
+- **Modern Filter Interface**: Card-based layout with responsive grid design
+- **Visual Status Indicators**: Color-coded badges for plant status and growth stages
+- **Enhanced Feedback**: Real-time selection counters and filter result displays
+- **Better Confirmations**: Detailed confirmation dialogs for destructive operations
+- **Auto-refresh**: Automatic data reload after successful operations
+
+### 🎨 **Visual Enhancements**
+- **Status Badge System**: Color-coded Growing (green), Harvested (orange), Destroyed (red), Sent (blue)
+- **Stage Indicators**: Visual badges for Clone, Veg, Flower, Mother stages
+- **Mother Plant Icons**: Crown emoji (👑) for easy mother plant identification
+- **Responsive Design**: Mobile-friendly layouts and touch-optimized controls
+
+### 🔧 **Technical Improvements**
+- **Enhanced Backend API**: Updated plant data endpoints with comprehensive information
+- **Dynamic Filter Population**: Automatically populated filters from actual plant data
+- **Performance Optimization**: Efficient filtering and display update mechanisms
+- **Better Error Handling**: Comprehensive validation and user-friendly error messages
+
 ## [2.6.0] - 2025-01-19
 
 ### 🎯 Enhanced Navigation & Dashboard

@@ -7,17 +7,29 @@ try {
 
     $sql = "SELECT
                 P.id,
+                P.tracking_number,
+                P.plant_tag,
                 G.name AS geneticsName,
+                P.growth_stage,
+                R.name AS room_name,
+                P.status,
+                P.date_created,
+                P.date_stage_changed,
                 CAST((julianday('now') - julianday(P.date_created)) AS INTEGER) AS age,
-                P.status
+                CAST((julianday('now') - julianday(P.date_stage_changed)) AS INTEGER) AS days_in_stage,
+                P.is_mother,
+                P.genetics_id,
+                P.room_id
             FROM
                 Plants P
-            JOIN
+            LEFT JOIN
                 Genetics G ON P.genetics_id = G.id
+            LEFT JOIN
+                Rooms R ON P.room_id = R.id
             WHERE
-                P.status = 'Growing'
+                P.status IN ('Growing', 'Harvested', 'Destroyed', 'Sent')
             ORDER BY
-                age ASC";
+                P.growth_stage, G.name, age DESC";
 
     $stmt = $pdo->query($sql);
     $plantsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
