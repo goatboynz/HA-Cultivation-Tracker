@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>CultivationTracker - Flowering Stage Plants</title> 
 </head>
 <body>
@@ -17,35 +18,33 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div>
         
-        <div class="grid">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
-                <h1>Flowering Stage Plants</h1>
-                <p><small>Individual flowering plant management and harvest tracking</small></p>
+                <h1>🌸 Flowering Stage Plants</h1>
+                <p style="color: var(--text-secondary); margin: 0;">Individual flowering plant management and harvest tracking</p>
             </div>
-            <div style="text-align: right;">
-                <button onclick="refreshData()" class="button secondary">Refresh</button>
-            </div>
+            <button onclick="refreshData()" class="modern-btn secondary">🔄 Refresh</button>
         </div>
 
         <!-- Filters -->
-        <div class="card">
-            <h3>Filters</h3>
-            <div class="grid">
+        <div class="modern-card" style="margin-bottom: 2rem;">
+            <h3>🔍 Filters</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
                 <div>
                     <label for="roomFilter">Room:</label>
-                    <select id="roomFilter" class="input">
+                    <select id="roomFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Rooms</option>
                     </select>
                 </div>
                 <div>
                     <label for="geneticsFilter">Genetics:</label>
-                    <select id="geneticsFilter" class="input">
+                    <select id="geneticsFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Genetics</option>
                     </select>
                 </div>
                 <div>
                     <label for="floweringTimeFilter">Flowering Time:</label>
-                    <select id="floweringTimeFilter" class="input">
+                    <select id="floweringTimeFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Times</option>
                         <option value="0-30">0-30 days</option>
                         <option value="31-45">31-45 days</option>
@@ -56,7 +55,7 @@
                 </div>
                 <div>
                     <label for="readyFilter">Harvest Ready:</label>
-                    <select id="readyFilter" class="input">
+                    <select id="readyFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Plants</option>
                         <option value="ready">Ready to Harvest</option>
                         <option value="soon">Ready Soon (7 days)</option>
@@ -66,29 +65,33 @@
         </div>
 
         <!-- Flower Plants Table -->
-        <div class="table-container">
-            <table id="flowerTable">
-                <thead>
-                    <tr>
-                        <th>Tracking #</th>
-                        <th>Tag</th>
-                        <th>Genetics</th>
-                        <th>Room</th>
-                        <th>Started Flowering</th>
-                        <th>Days in Flower</th>
-                        <th>Expected Harvest</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="flowerTableBody">
-                    <!-- Data will be loaded here -->
-                </tbody>
-            </table>
-        </div>
-
-        <div id="noDataMessage" style="display: none;">
-            <p>No flowering stage plants found.</p>
+        <div class="modern-card">
+            <h3>🌸 Your Flowering Plants</h3>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="flowerTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Tracking #</th>
+                            <th>Tag</th>
+                            <th>Genetics</th>
+                            <th>Room</th>
+                            <th>Started Flowering</th>
+                            <th>Days in Flower</th>
+                            <th>Expected Harvest</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flowerTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="noDataMessage" style="display: none; text-align: center; padding: 3rem; color: var(--text-secondary);">
+                <h3>No Flowering Plants Found</h3>
+                <p>Move some vegetative plants to flowering stage to see them here</p>
+            </div>
         </div>
     </main>
 
@@ -207,9 +210,11 @@
                     <td>${harvestStatus}</td>
                     <td><span class="status-badge ${plant.status.toLowerCase()}">${plant.status}</span></td>
                     <td>
-                        <a href="edit_plant.php?id=${plant.id}" class="button small">Edit</a>
-                        ${isReady ? `<button onclick="harvestPlant(${plant.id})" class="button small" style="background-color: #22c55e;">Harvest</button>` : ''}
-                        <button onclick="destroyPlant(${plant.id})" class="button small secondary">Destroy</button>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="edit_plant.php?id=${plant.id}" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">✏️ Edit</a>
+                            ${isReady ? `<button onclick="harvestPlant(${plant.id})" class="modern-btn" style="font-size: 0.8rem; padding: 0.5rem 0.75rem; background: var(--accent-success);">✂️ Harvest</button>` : ''}
+                            <button onclick="destroyPlant(${plant.id})" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem; color: var(--accent-error); border-color: var(--accent-error);">🗑️ Destroy</button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(row);

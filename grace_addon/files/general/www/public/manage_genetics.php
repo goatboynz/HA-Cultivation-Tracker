@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>CultivationTracker - Manage Genetics</title> 
 </head>
 <body>
@@ -17,39 +18,37 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div>
         
-        <div class="grid">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
-                <h1>Genetics Management</h1>
-                <p><small>Manage your genetic strains and their characteristics</small></p>
+                <h1>🧬 Genetics Management</h1>
+                <p style="color: var(--text-secondary); margin: 0;">Manage your genetic strains and their characteristics</p>
             </div>
-            <div style="text-align: right;">
-                <button onclick="showAddGeneticsForm()" class="button">Add New Genetics</button>
-            </div>
+            <button onclick="showAddGeneticsForm()" class="modern-btn">➕ Add New Genetics</button>
         </div>
 
         <!-- Add Genetics Form -->
-        <div id="addGeneticsForm" style="display: none;" class="card">
-            <h3>Add New Genetics</h3>
-            <form id="geneticsForm" action="handle_add_genetics.php" method="post" enctype="multipart/form-data">
-                <div class="grid">
+        <div id="addGeneticsForm" style="display: none; margin-bottom: 2rem;" class="modern-card">
+            <h3>➕ Add New Genetics</h3>
+            <form id="geneticsForm" action="handle_add_genetics.php" method="post" enctype="multipart/form-data" class="modern-form" style="background: none; border: none; padding: 0; box-shadow: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0;">
                     <div>
                         <label for="name">Strain Name *:</label>
-                        <input type="text" id="name" name="name" class="input" required>
+                        <input type="text" id="name" name="name" required>
                     </div>
                     <div>
                         <label for="breeder">Breeder:</label>
-                        <input type="text" id="breeder" name="breeder" class="input">
+                        <input type="text" id="breeder" name="breeder">
                     </div>
                 </div>
                 
-                <div class="grid">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0;">
                     <div>
                         <label for="genetic_lineage">Genetic Lineage:</label>
-                        <input type="text" id="genetic_lineage" name="genetic_lineage" class="input" placeholder="e.g., OG Kush x Sour Diesel">
+                        <input type="text" id="genetic_lineage" name="genetic_lineage" placeholder="e.g., OG Kush x Sour Diesel">
                     </div>
                     <div>
                         <label for="indica_sativa_ratio">Indica/Sativa Ratio:</label>
-                        <select id="indica_sativa_ratio" name="indica_sativa_ratio" class="input">
+                        <select id="indica_sativa_ratio" name="indica_sativa_ratio">
                             <option value="">Select Type</option>
                             <option value="100% Indica">100% Indica</option>
                             <option value="80% Indica / 20% Sativa">80% Indica / 20% Sativa</option>
@@ -62,60 +61,60 @@
                     </div>
                 </div>
 
-                <div class="grid">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
                     <div>
                         <label for="flowering_days">Flowering Days:</label>
-                        <input type="number" id="flowering_days" name="flowering_days" class="input" min="35" max="120" placeholder="e.g., 63">
+                        <input type="number" id="flowering_days" name="flowering_days" min="35" max="120" placeholder="e.g., 63">
                     </div>
                     <div>
                         <label for="thc_percentage">THC % (estimated):</label>
-                        <input type="number" id="thc_percentage" name="thc_percentage" class="input" min="0" max="35" step="0.1" placeholder="e.g., 22.5">
+                        <input type="number" id="thc_percentage" name="thc_percentage" min="0" max="35" step="0.1" placeholder="e.g., 22.5">
                     </div>
-                </div>
-
-                <div class="grid">
                     <div>
                         <label for="cbd_percentage">CBD % (estimated):</label>
-                        <input type="number" id="cbd_percentage" name="cbd_percentage" class="input" min="0" max="25" step="0.1" placeholder="e.g., 0.5">
+                        <input type="number" id="cbd_percentage" name="cbd_percentage" min="0" max="25" step="0.1" placeholder="e.g., 0.5">
                     </div>
                     <div>
                         <label for="photo_upload">Photo:</label>
-                        <input type="file" id="photo_upload" name="photo_upload" class="input" accept="image/*">
+                        <input type="file" id="photo_upload" name="photo_upload" accept="image/*">
                     </div>
                 </div>
 
-                <div>
+                <div style="margin: 1rem 0;">
                     <label for="description">Description:</label>
-                    <textarea id="description" name="description" class="input" rows="3" placeholder="Describe the strain characteristics, effects, flavor profile, etc."></textarea>
+                    <textarea id="description" name="description" rows="3" placeholder="Describe the strain characteristics, effects, flavor profile, etc."></textarea>
                 </div>
 
-                <div class="grid">
-                    <button type="submit" class="button">Add Genetics</button>
-                    <button type="button" onclick="hideAddGeneticsForm()" class="button secondary">Cancel</button>
+                <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                    <button type="submit" class="modern-btn">💾 Add Genetics</button>
+                    <button type="button" onclick="hideAddGeneticsForm()" class="modern-btn secondary">❌ Cancel</button>
                 </div>
             </form>
         </div>
 
         <!-- Genetics Table -->
-        <div class="table-container">
-            <table id="geneticsTable">
-                <thead>
-                    <tr>
-                        <th>Photo</th>
-                        <th>Strain Name</th>
-                        <th>Breeder</th>
-                        <th>Type</th>
-                        <th>Flowering Days</th>
-                        <th>THC %</th>
-                        <th>CBD %</th>
-                        <th>Plants</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="geneticsTableBody">
-                    <!-- Data will be loaded here -->
-                </tbody>
-            </table>
+        <div class="modern-card">
+            <h3>🧬 Your Genetics Collection</h3>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="geneticsTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Strain Name</th>
+                            <th>Breeder</th>
+                            <th>Type</th>
+                            <th>Flowering Days</th>
+                            <th>THC %</th>
+                            <th>CBD %</th>
+                            <th>Plants</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="geneticsTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 
@@ -152,8 +151,10 @@
                             <td>${genetic.cbd_percentage ? genetic.cbd_percentage + '%' : '-'}</td>
                             <td>${genetic.plant_count || 0}</td>
                             <td>
-                                <button onclick="editGenetics(${genetic.id})" class="button small">Edit</button>
-                                <button onclick="viewDetails(${genetic.id})" class="button small">Details</button>
+                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                    <button onclick="editGenetics(${genetic.id})" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">✏️ Edit</button>
+                                    <button onclick="viewDetails(${genetic.id})" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">👁️ Details</button>
+                                </div>
                             </td>
                         `;
                         tbody.appendChild(row);

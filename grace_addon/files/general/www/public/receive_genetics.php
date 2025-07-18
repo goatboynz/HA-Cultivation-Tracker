@@ -7,7 +7,7 @@
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="css/growcart.css">
-    <link rel="stylesheet" href="css/modern-responsive.css">
+    <link rel="stylesheet" href="css/modern-theme.css">
     <title>CultivationTracker - Add Plants</title> 
 </head>
 <body>
@@ -18,93 +18,86 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div> 
 
-        <h1>Receive Genetics</h1>
+        <div style="margin-bottom: 2rem;">
+            <h1>🌱 Receive Genetics</h1>
+            <p style="color: var(--text-secondary); margin: 0;">Any time you're receiving or adding genetics, either through a Form D declaration, taking clones, or from another licensed cultivator, this is where you want to add them.</p>
+        </div>
 
-	<p><small>Any time you're receiving or adding genetics, either through a Form D declaration, taking clones, or from another licensed cultivator, this is where you want to add them.</small></p>
-
-        <form id="receiveGeneticsForm" class="modern-form" action="handle_receive_genetics.php" method="post"> 
+        <form id="receiveGeneticsForm" class="modern-form" action="handle_receive_genetics.php" method="post" style="background: none; border: none; padding: 0; box-shadow: none;"> 
             
             <!-- Source Selection Card -->
-            <div class="form-card">
-                <div class="card-header">
-                    <h3>Plant Source</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="sourceType">Source Type *</label>
-                            <select id="sourceType" name="sourceType" class="form-control" required>
-                                <option value="" disabled selected>Select Source</option>
-                                <option value="mother">From Mother Plant</option>
-                                <option value="seed">From Seed Stock</option>
-                                <option value="clone">Clone/Cutting</option>
-                                <option value="purchased">Purchased Plants</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group" id="motherPlantGroup" style="display: none;">
-                            <label for="motherId">Mother Plant *</label>
-                            <select id="motherId" name="motherId" class="form-control">
-                                <option value="" disabled selected>Select Mother Plant</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group" id="seedStockGroup" style="display: none;">
-                            <label for="seedStockId">Seed Stock *</label>
-                            <select id="seedStockId" name="seedStockId" class="form-control">
-                                <option value="" disabled selected>Select Seed Stock</option>
-                            </select>
-                        </div>
+            <div class="modern-card" style="margin-bottom: 1.5rem;">
+                <h3>📍 Plant Source</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div>
+                        <label for="sourceType">Source Type *</label>
+                        <select id="sourceType" name="sourceType" required>
+                            <option value="" disabled selected>Select Source</option>
+                            <option value="mother">From Mother Plant</option>
+                            <option value="seed">From Seed Stock</option>
+                            <option value="clone">Clone/Cutting</option>
+                            <option value="purchased">Purchased Plants</option>
+                        </select>
+                    </div>
+                    
+                    <div id="motherPlantGroup" style="display: none;">
+                        <label for="motherId">Mother Plant *</label>
+                        <select id="motherId" name="motherId">
+                            <option value="" disabled selected>Select Mother Plant</option>
+                        </select>
+                    </div>
+                    
+                    <div id="seedStockGroup" style="display: none;">
+                        <label for="seedStockId">Seed Stock *</label>
+                        <select id="seedStockId" name="seedStockId">
+                            <option value="" disabled selected>Select Seed Stock</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <!-- Plant Details Card -->
-            <div class="form-card">
-                <div class="card-header">
-                    <h3>Plant Details</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="plantCount">Number of Plants *</label>
-                            <input type="number" id="plantCount" name="plantCount" class="form-control" min="1" required>
-                            <small class="form-text">How many plants to add</small>
-                        </div>
+            <div class="modern-card" style="margin-bottom: 1.5rem;">
+                <h3>🌿 Plant Details</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div>
+                        <label for="plantCount">Number of Plants *</label>
+                        <input type="number" id="plantCount" name="plantCount" min="1" required>
+                        <small style="color: var(--text-secondary); font-size: 0.8rem;">How many plants to add</small>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="geneticsName">Genetics *</label>
-                            <select id="geneticsName" name="geneticsName" class="form-control" required>
-                                <option value="" disabled selected>Select Genetics</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label for="geneticsName">Genetics *</label>
+                        <select id="geneticsName" name="geneticsName" required>
+                            <option value="" disabled selected>Select Genetics</option>
+                        </select>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="roomName">Room *</label>
-                            <select id="roomName" name="roomName" class="form-control" required>
-                                <option value="" disabled selected>Select Room</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="growthStage">Initial Growth Stage</label>
-                            <select id="growthStage" name="growthStage" class="form-control">
-                                <option value="Clone">Clone</option>
-                                <option value="Veg">Vegetative</option>
-                                <option value="Flower">Flowering</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label for="roomName">Room *</label>
+                        <select id="roomName" name="roomName" required>
+                            <option value="" disabled selected>Select Room</option>
+                        </select>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="notes">Notes</label>
-                        <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="Additional information about these plants..."></textarea>
+                    <div>
+                        <label for="growthStage">Initial Growth Stage</label>
+                        <select id="growthStage" name="growthStage">
+                            <option value="Clone">Clone</option>
+                            <option value="Veg">Vegetative</option>
+                            <option value="Flower">Flowering</option>
+                        </select>
                     </div>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Additional information about these plants..."></textarea>
                 </div>
             </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-lg">🌱 Add Plants</button>
+            <div style="text-align: center;">
+                <button type="submit" class="modern-btn" style="font-size: 1.1rem; padding: 1rem 2rem;">🌱 Add Plants</button>
             </div>
         </form>
     </main>

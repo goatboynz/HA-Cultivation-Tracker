@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>CultivationTracker - Vegetative Stage Plants</title> 
 </head>
 <body>
@@ -17,35 +18,33 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div>
         
-        <div class="grid">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
-                <h1>Vegetative Stage Plants</h1>
-                <p><small>Individual vegetative plant management and tracking</small></p>
+                <h1>🌱 Vegetative Stage Plants</h1>
+                <p style="color: var(--text-secondary); margin: 0;">Individual vegetative plant management and tracking</p>
             </div>
-            <div style="text-align: right;">
-                <button onclick="refreshData()" class="button secondary">Refresh</button>
-            </div>
+            <button onclick="refreshData()" class="modern-btn secondary">🔄 Refresh</button>
         </div>
 
         <!-- Filters -->
-        <div class="card">
-            <h3>Filters</h3>
-            <div class="grid">
+        <div class="modern-card" style="margin-bottom: 2rem;">
+            <h3>🔍 Filters</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
                 <div>
                     <label for="roomFilter">Room:</label>
-                    <select id="roomFilter" class="input">
+                    <select id="roomFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Rooms</option>
                     </select>
                 </div>
                 <div>
                     <label for="geneticsFilter">Genetics:</label>
-                    <select id="geneticsFilter" class="input">
+                    <select id="geneticsFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Genetics</option>
                     </select>
                 </div>
                 <div>
                     <label for="ageFilter">Age Range:</label>
-                    <select id="ageFilter" class="input">
+                    <select id="ageFilter" style="width: 100%; padding: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                         <option value="">All Ages</option>
                         <option value="0-14">0-14 days</option>
                         <option value="15-30">15-30 days</option>
@@ -57,28 +56,32 @@
         </div>
 
         <!-- Veg Plants Table -->
-        <div class="table-container">
-            <table id="vegTable">
-                <thead>
-                    <tr>
-                        <th>Tracking #</th>
-                        <th>Tag</th>
-                        <th>Genetics</th>
-                        <th>Room</th>
-                        <th>Moved to Veg</th>
-                        <th>Days in Veg</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="vegTableBody">
-                    <!-- Data will be loaded here -->
-                </tbody>
-            </table>
-        </div>
-
-        <div id="noDataMessage" style="display: none;">
-            <p>No vegetative stage plants found.</p>
+        <div class="modern-card">
+            <h3>🌱 Your Vegetative Plants</h3>
+            <div style="overflow-x: auto; margin-top: 1rem;">
+                <table id="vegTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Tracking #</th>
+                            <th>Tag</th>
+                            <th>Genetics</th>
+                            <th>Room</th>
+                            <th>Moved to Veg</th>
+                            <th>Days in Veg</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vegTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="noDataMessage" style="display: none; text-align: center; padding: 3rem; color: var(--text-secondary);">
+                <h3>No Vegetative Plants Found</h3>
+                <p>Move some clones to vegetative stage to see them here</p>
+            </div>
         </div>
     </main>
 
@@ -173,9 +176,11 @@
                     <td>${daysInVeg}</td>
                     <td><span class="status-badge ${plant.status.toLowerCase()}">${plant.status}</span></td>
                     <td>
-                        <a href="edit_plant.php?id=${plant.id}" class="button small">Edit</a>
-                        <button onclick="moveToFlower(${plant.id})" class="button small">→ Flower</button>
-                        <button onclick="destroyPlant(${plant.id})" class="button small secondary">Destroy</button>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="edit_plant.php?id=${plant.id}" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">✏️ Edit</a>
+                            <button onclick="moveToFlower(${plant.id})" class="modern-btn" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">🌸 → Flower</button>
+                            <button onclick="destroyPlant(${plant.id})" class="modern-btn secondary" style="font-size: 0.8rem; padding: 0.5rem 0.75rem; color: var(--accent-error); border-color: var(--accent-error);">🗑️ Destroy</button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(row);

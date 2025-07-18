@@ -8,6 +8,7 @@
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css">
     <title>GRACe - Add New Genetics</title>
     <style>
         /* Add some basic styling for the status message */
@@ -36,22 +37,32 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div>
 
-        <h1>Add New Genetics</h1>
+        <div style="margin-bottom: 2rem;">
+            <h1>🧬 Add New Genetics</h1>
+            <p style="color: var(--text-secondary); margin: 0;">Prior to genetics being available to clone or receive, they need to be added into your system here.</p>
+        </div>
 
-        <p>Prior to genetics being available to clone or receive, they need to be added into your system here.</p>
+        <div class="modern-card">
+            <h3>➕ New Genetics Information</h3>
+            <form id="addGeneticsForm" class="modern-form" action="handle_add_new_genetics.php" method="post" style="background: none; border: none; padding: 0; box-shadow: none;">
+                <div style="margin-bottom: 1rem;">
+                    <label for="geneticsName">Genetics Name:</label>
+                    <input type="text" id="geneticsName" name="geneticsName" required>
+                </div>
 
-        <form id="addGeneticsForm" class="form" action="handle_add_new_genetics.php" method="post">
-            <label for="geneticsName">Genetics Name:</label>
-            <input type="text" id="geneticsName" name="geneticsName" class="input" required>
+                <div style="margin-bottom: 1rem;">
+                    <label for="breeder">Breeder (Optional):</label>
+                    <input type="text" id="breeder" name="breeder">
+                </div>
 
-            <label for="breeder">Breeder (Optional):</label>
-            <input type="text" id="breeder" name="breeder" class="input">
+                <div style="margin-bottom: 1rem;">
+                    <label for="geneticLineage">Genetic Lineage (Optional):</label>
+                    <textarea id="geneticLineage" name="geneticLineage" rows="3"></textarea>
+                </div>
 
-            <label for="geneticLineage">Genetic Lineage (Optional):</label>
-            <textarea id="geneticLineage" name="geneticLineage" class="input" rows="3"></textarea>
-
-            <button type="submit" class="button">Add Genetics</button>
-        </form>
+                <button type="submit" class="modern-btn">💾 Add Genetics</button>
+            </form>
+        </div>
     </main>
 
     <script src="js/growcart.js"></script>

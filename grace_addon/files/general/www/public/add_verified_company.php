@@ -8,7 +8,8 @@
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">   
 
-    <link rel="stylesheet" href="css/growcart.css"> 
+    <link rel="stylesheet" href="css/growcart.css">
+    <link rel="stylesheet" href="css/modern-theme.css"> 
     <title>GRACe - Add Verified Company</title> 
 </head>
 <body>
@@ -19,31 +20,48 @@
     <main class="container">
         <div id="statusMessage" class="status-message" style="display: none;"></div> 
 
-        <h1>Add Verified Company</h1>
+        <div style="margin-bottom: 2rem;">
+            <h1>🏢 Add Verified Company</h1>
+            <p style="color: var(--text-secondary); margin: 0;">Companies added here will show up as a destination in the forms for CoC / Testing.</p>
+        </div>
 
-        <p><small>Companies added here will show up as a destination in the forms for CoC / Testing.</small></p>
+        <div class="modern-card">
+            <h3>➕ Company Information</h3>
+            <form id="addCompanyForm" class="modern-form" style="background: none; border: none; padding: 0; box-shadow: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label for="companyName">Company Name:</label>
+                        <input type="text" id="companyName" name="companyName" required>
+                    </div>
+                    <div>
+                        <label for="licenseNumber">License #:</label>
+                        <input type="text" id="licenseNumber" name="licenseNumber" required>
+                    </div>
+                </div>
 
-        <form id="addCompanyForm" class="form">
-            <label for="companyName">Company Name:</label>
-            <input type="text" id="companyName" name="companyName" class="input" required>
+                <div style="margin-bottom: 1rem;">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                </div>
 
-            <label for="licenseNumber">License #:</label>
-            <input type="text" id="licenseNumber" name="licenseNumber" class="input" required>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label for="contactName">Primary Contact Name:</label>
+                        <input type="text" id="contactName" name="contactName" required>
+                    </div>
+                    <div>
+                        <label for="contactEmail">Primary Contact Email:</label>
+                        <input type="email" id="contactEmail" name="contactEmail" required>
+                    </div>
+                    <div>
+                        <label for="contactPhone">Primary Contact Phone:</label>
+                        <input type="tel" id="contactPhone" name="contactPhone" required>
+                    </div>
+                </div>
 
-            <label for="address">Address:</label>
-            <textarea id="address" name="address" class="input" rows="3" required></textarea>
-
-            <label for="contactName">Primary Contact Name:</label>
-            <input type="text" id="contactName" name="contactName" class="input" required>
-
-            <label for="contactEmail">Primary Contact Email:</label>
-            <input type="email" id="contactEmail" name="contactEmail" class="input" required>
-
-            <label for="contactPhone">Primary Contact Phone:</label>
-            <input type="tel" id="contactPhone" name="contactPhone" class="input" required>
-
-            <button type="submit" class="button">Add Company</button>
-        </form>
+                <button type="submit" class="modern-btn">💾 Add Company</button>
+            </form>
+        </div>
     </main>
 
     <script src="js/growcart.js"></script> 
