@@ -146,6 +146,78 @@
                 </div>
             </div>
         </div>
+
+        <!-- Batch Operation Modal -->
+        <div id="batchModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Batch Operation</h3>
+                    <button onclick="closeBatchModal()" class="close-btn">×</button>
+                </div>
+                <div class="modal-body">
+                    <form id="batchForm">
+                        <div class="form-group">
+                            <label for="batchName">Batch Name:</label>
+                            <input type="text" id="batchName" name="batchName" class="form-control" placeholder="Auto-generated if empty">
+                        </div>
+                        
+                        <div id="destructionFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="destructionReason">Destruction Reason: *</label>
+                                <select id="destructionReason" name="destructionReason" class="form-control" required>
+                                    <option value="">Select Reason</option>
+                                    <option value="disease">🦠 Disease/Infection</option>
+                                    <option value="pests">🐛 Pest Infestation</option>
+                                    <option value="poor_growth">📉 Poor Growth/Development</option>
+                                    <option value="hermaphrodite">⚧ Hermaphrodite</option>
+                                    <option value="overcrowding">🏠 Overcrowding</option>
+                                    <option value="quality_control">🔍 Quality Control</option>
+                                    <option value="compliance">📋 Compliance Requirement</option>
+                                    <option value="other">❓ Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="destructionMethod">Destruction Method:</label>
+                                <select id="destructionMethod" name="destructionMethod" class="form-control">
+                                    <option value="">Select Method</option>
+                                    <option value="composting">🌱 Composting</option>
+                                    <option value="grinding">⚙️ Grinding/Mulching</option>
+                                    <option value="burning">🔥 Burning</option>
+                                    <option value="burial">🕳️ Burial</option>
+                                    <option value="other">❓ Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="witnessName">Witness Name:</label>
+                                <input type="text" id="witnessName" name="witnessName" class="form-control" placeholder="Name of witness to destruction">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="batchNotes">Notes:</label>
+                            <textarea id="batchNotes" name="batchNotes" class="form-control" rows="3" placeholder="Additional notes about this batch operation..."></textarea>
+                        </div>
+                        
+                        <div id="weightInputs" class="form-group">
+                            <h4>Individual Plant Weights</h4>
+                            <div id="plantWeightsList">
+                                <!-- Plant weight inputs will be generated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="modal-actions">
+                            <button type="button" onclick="processBatchOperation()" class="modern-btn">
+                                <span id="modalProcessBtn">Process Batch</span>
+                            </button>
+                            <button type="button" onclick="closeBatchModal()" class="modern-btn secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
     </main>
 
     <script src="js/growcart.js"></script>
@@ -327,28 +399,141 @@
                 return;
             }
 
-            // Confirmation dialog
-            const actionText = selectedAction === 'harvest' ? 'harvest' : 
-                              selectedAction === 'destroy' ? 'destroy' : 'send';
-            const confirmMessage = `Are you sure you want to ${actionText} ${selectedPlantIds.length} plant${selectedPlantIds.length !== 1 ? 's' : ''}?`;
+            // Open batch modal for detailed input
+            openBatchModal(selectedPlantIds, selectedAction);
+        });
+
+        function openBatchModal(plantIds, action) {
+            const modal = document.getElementById('batchModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const destructionFields = document.getElementById('destructionFields');
+            const modalProcessBtn = document.getElementById('modalProcessBtn');
             
-            if (!confirm(confirmMessage)) {
+            // Set modal title and show/hide fields based on action
+            if (action === 'destroy') {
+                modalTitle.textContent = '🗑️ Batch Destruction';
+                destructionFields.style.display = 'block';
+                modalProcessBtn.textContent = '🗑️ Destroy Plants';
+                document.getElementById('destructionReason').required = true;
+            } else if (action === 'harvest') {
+                modalTitle.textContent = '✂️ Batch Harvest';
+                destructionFields.style.display = 'none';
+                modalProcessBtn.textContent = '✂️ Harvest Plants';
+                document.getElementById('destructionReason').required = false;
+            } else {
+                modalTitle.textContent = '📦 Send Plants';
+                destructionFields.style.display = 'none';
+                modalProcessBtn.textContent = '📦 Send Plants';
+                document.getElementById('destructionReason').required = false;
+            }
+            
+            // Generate weight inputs for selected plants
+            generateWeightInputs(plantIds, action);
+            
+            // Store selected data for processing
+            modal.dataset.plantIds = JSON.stringify(plantIds);
+            modal.dataset.action = action;
+            
+            modal.style.display = 'flex';
+        }
+
+        function generateWeightInputs(plantIds, action) {
+            const container = document.getElementById('plantWeightsList');
+            container.innerHTML = '';
+            
+            plantIds.forEach(plantId => {
+                const plant = filteredPlants.find(p => p.id == plantId);
+                if (!plant) return;
+                
+                const weightItem = document.createElement('div');
+                weightItem.className = 'plant-weight-item';
+                
+                if (action === 'harvest') {
+                    weightItem.innerHTML = `
+                        <label><strong>${plant.tracking_number}</strong><br>${plant.genetics_name}</label>
+                        <input type="number" step="0.1" min="0" placeholder="Wet (g)" data-plant="${plantId}" data-type="wet">
+                        <input type="number" step="0.1" min="0" placeholder="Dry (g)" data-plant="${plantId}" data-type="dry">
+                        <input type="number" step="0.1" min="0" placeholder="Flower (g)" data-plant="${plantId}" data-type="flower">
+                        <input type="number" step="0.1" min="0" placeholder="Trim (g)" data-plant="${plantId}" data-type="trim">
+                    `;
+                } else {
+                    weightItem.innerHTML = `
+                        <label><strong>${plant.tracking_number}</strong><br>${plant.genetics_name}</label>
+                        <input type="number" step="0.1" min="0" placeholder="Weight (g)" data-plant="${plantId}" data-type="total">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    `;
+                }
+                
+                container.appendChild(weightItem);
+            });
+        }
+
+        function closeBatchModal() {
+            const modal = document.getElementById('batchModal');
+            modal.style.display = 'none';
+            
+            // Reset form
+            document.getElementById('batchForm').reset();
+        }
+
+        function processBatchOperation() {
+            const modal = document.getElementById('batchModal');
+            const plantIds = JSON.parse(modal.dataset.plantIds);
+            const action = modal.dataset.action;
+            
+            // Collect form data
+            const batchName = document.getElementById('batchName').value;
+            const reason = document.getElementById('destructionReason').value;
+            const method = document.getElementById('destructionMethod').value;
+            const witnessName = document.getElementById('witnessName').value;
+            const notes = document.getElementById('batchNotes').value;
+            
+            // Validate required fields
+            if (action === 'destroy' && !reason) {
+                showStatusMessage('Destruction reason is required', 'error');
                 return;
             }
-
-            showStatusMessage(`Processing ${selectedPlantIds.length} plants...`, 'info');
-
-            // Send selected plant IDs, action, and company (if applicable) to the server
-            fetch('handle_harvest_plants.php', {
+            
+            // Collect weights
+            const weights = {};
+            const weightInputs = document.querySelectorAll('#plantWeightsList input[type="number"]');
+            
+            weightInputs.forEach(input => {
+                const plantId = input.dataset.plant;
+                const type = input.dataset.type;
+                const value = parseFloat(input.value) || 0;
+                
+                if (!weights[plantId]) {
+                    weights[plantId] = {};
+                }
+                weights[plantId][type] = value;
+            });
+            
+            // Prepare data for batch operation
+            const batchData = {
+                selectedPlants: plantIds,
+                action: action,
+                batchName: batchName,
+                reason: reason,
+                method: method,
+                witnessName: witnessName,
+                notes: notes,
+                weights: weights,
+                companyId: companyDropdown.value
+            };
+            
+            showStatusMessage(`Processing batch ${action}...`, 'info');
+            closeBatchModal();
+            
+            // Send to enhanced batch handler
+            fetch('handle_batch_operations.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 
-                    selectedPlants: selectedPlantIds, 
-                    action: selectedAction, 
-                    companyId: companyDropdown.value 
-                })
+                body: JSON.stringify(batchData)
             })
             .then(response => response.json())
             .then(data => {
@@ -363,10 +548,10 @@
                 }
             })
             .catch(error => {
-                console.error('Error during fetch or processing response:', error);
-                showStatusMessage('An error occurred. Please check the console for details.', 'error');
+                console.error('Error during batch operation:', error);
+                showStatusMessage('An error occurred during batch operation', 'error');
             });
-        });
+        }
 
         // Show/Hide company selection based on action
         actionDropdown.addEventListener('change', () => {
@@ -436,5 +621,133 @@
             showStatusMessage(errorMessage, 'error');
         }
     </script>
+
+    <style>
+        .reason-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: var(--accent-danger);
+            color: white;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .plant-weight-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 0.5rem;
+            align-items: center;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .plant-weight-item label {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .plant-weight-item input {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
 </body>
 </html>
