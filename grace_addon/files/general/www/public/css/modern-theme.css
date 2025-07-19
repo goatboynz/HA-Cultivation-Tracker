@@ -546,4 +546,255 @@ Navigation Dropdown Dividers */
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.3;
+}/* Enhan
+ced Edit Plant Page Styles */
+.edit-plant-form {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.form-section {
+    margin-bottom: 2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.field-group small {
+    margin-top: 0.25rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.readonly-field {
+    background: var(--bg-tertiary) !important;
+    color: var(--text-secondary) !important;
+    cursor: not-allowed;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.status-growing {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--accent-success);
+}
+
+.status-harvested {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--accent-warning);
+}
+
+.status-destroyed {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--accent-error);
+}
+
+.status-sent {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--accent-info);
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.photo-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.photo-delete {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.photo-delete:hover {
+    background: var(--accent-error);
+}
+
+.camera-preview {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+.camera-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.weight-input {
+    position: relative;
+}
+
+.weight-input::after {
+    content: 'g';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.weight-input input {
+    padding-right: 25px;
+}
+
+/* Conditional field animations */
+.conditional-field {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.conditional-field.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.conditional-field.visible {
+    max-height: 500px;
+    opacity: 1;
+}
+
+/* Enhanced form validation styles */
+.field-error {
+    border-color: var(--accent-error) !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}
+
+.error-message {
+    color: var(--accent-error);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.success-message {
+    color: var(--accent-success);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+/* Mother plant indicator */
+.mother-indicator {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+/* Stage indicators */
+.stage-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.stage-clone {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.stage-veg {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.stage-flower {
+    background: rgba(236, 72, 153, 0.2);
+    color: #ec4899;
+}
+
+.stage-mother {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
 }

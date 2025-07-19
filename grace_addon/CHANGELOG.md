@@ -2,6 +2,36 @@
 
 All notable changes to the MediFlower Cultivation Tracker addon will be documented in this file.
 
+## [2.10.0] - 2025-01-19
+
+### 🎨 **Enhanced Edit Plant Page**
+- **Complete UI Redesign**: Professional form layout with organized sections and modern styling
+- **Comprehensive Field Coverage**: All plant attributes now editable including source information, dates, weights, and destruction details
+- **Conditional Field Display**: Smart form that shows/hides relevant sections based on plant status and source type
+- **Enhanced Photo Management**: Improved photo upload, camera capture, and photo gallery display
+- **Better Form Validation**: Real-time validation with helpful error messages and field descriptions
+- **Animated Transitions**: Smooth animations for conditional field visibility changes
+
+### 🔧 **Fixed Mother Plant Selection**
+- **Enhanced Mother Plant API**: Improved get_mother_plants.php to return complete plant information
+- **Better Plant Filtering**: Fixed mother plant selection to show all available mother plants
+- **Improved Data Loading**: Enhanced plant data loading with proper error handling
+- **Test Utilities**: Added debugging tools to identify and resolve mother plant selection issues
+
+### ✨ **Form Improvements**
+- **Professional Styling**: Modern card-based layout with consistent spacing and typography
+- **Field Organization**: Logical grouping of related fields with clear labels and descriptions
+- **Enhanced UX**: Better visual hierarchy, hover effects, and interactive elements
+- **Mobile Responsive**: Optimized form layout for all device sizes
+- **Accessibility**: Improved form accessibility with proper labels and keyboard navigation
+
+### 🚀 **Technical Enhancements**
+- **Enhanced CSS Framework**: Extended modern theme with form-specific styles and animations
+- **Improved JavaScript**: Better event handling, form validation, and user feedback
+- **Photo Management**: Enhanced photo upload and camera functionality
+- **Data Persistence**: Improved form data saving and error handling
+- **API Improvements**: Enhanced plant data APIs with better error handling and data completeness
+
 ## [2.9.0] - 2025-01-19
 
 ### 🗑️ **Advanced Destruction Tracking System**

@@ -1,8 +1,8 @@
         <nav class="modern-nav">
             <div class="nav-brand">
                 <a href="index.php">
-                    <strong>🌿 CultivationTracker</strong>
-                    <small>Professional Cannabis Management</small>
+                    <strong>🌿</strong>
+                    <small>Cultivation Tracker</small>
                 </a>
             </div>
             
@@ -128,11 +128,6 @@
                 <a href="administration.php" class="nav-item">
                     <span class="nav-icon">⚙️</span>
                     Admin
-                </a>
-                
-                <a href="logout.php" class="nav-item logout">
-                    <span class="nav-icon">🚪</span>
-                    Logout
                 </a>
             </div>
         </nav>
