@@ -251,6 +251,38 @@
                     </div>
                 </div>
 
+                <!-- Photos Card -->
+                <div class="modern-card form-section">
+                    <h3>📸 Plant Photos</h3>
+                    <div style="margin-top: 1rem;">
+                        <div id="currentPhotos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                            <!-- Current photos will be loaded here -->
+                        </div>
+                        
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                            <button type="button" class="modern-btn secondary" onclick="triggerFileUpload()">
+                                📁 Upload Photos
+                            </button>
+                            <button type="button" class="modern-btn secondary" onclick="openCamera()" id="cameraBtn">
+                                📷 Take Photo
+                            </button>
+                        </div>
+                        
+                        <input type="file" id="photoUpload" name="photos[]" multiple accept="image/*" style="display: none;">
+                        
+                        <div id="cameraSection" style="display: none; text-align: center; margin-top: 1rem;">
+                            <video id="cameraVideo" autoplay playsinline style="max-width: 100%; height: auto; border-radius: 8px;"></video>
+                            <canvas id="cameraCanvas" style="display: none;"></canvas>
+                            <div style="margin-top: 1rem;">
+                                <button type="button" class="modern-btn" onclick="capturePhoto()">📸 Capture</button>
+                                <button type="button" class="modern-btn secondary" onclick="closeCamera()">❌ Cancel</button>
+                            </div>
+                        </div>
+                        
+                        <div id="photoPreview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
+                    </div>
+                </div>
+
                 <!-- Notes Card -->
                 <div class="modern-card form-section">
                     <h3>📝 Notes & Observations</h3>
@@ -267,6 +299,9 @@
                         💾 Update Plant
                     </button>
                     <a href="all_plants.php" class="modern-btn secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">Cancel</a>
+                    <button type="button" onclick="deletePlant()" class="modern-btn secondary" style="font-size: 1.1rem; padding: 1rem 2rem; color: var(--accent-error); border-color: var(--accent-error); margin-left: auto;">
+                        🗑️ Delete Plant
+                    </button>
                 </div>
             </form>
         </div>
@@ -599,6 +634,97 @@
             closeCamera();
         }
 
+        // Photo functionality
+        function triggerFileUpload() {
+            document.getElementById('photoUpload').click();
+        }
+
+        document.getElementById('photoUpload').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const preview = document.getElementById('photoPreview');
+            
+            // Clear previous previews
+            preview.innerHTML = '';
+            
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const photoDiv = document.createElement('div');
+                        photoDiv.style.cssText = 'position: relative; border-radius: 8px; overflow: hidden;';
+                        photoDiv.innerHTML = `
+                            <img src="${e.target.result}" style="width: 100%; height: 150px; object-fit: cover;">
+                            <button type="button" onclick="this.parentElement.remove()" 
+                                    style="position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.8); color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer;">×</button>
+                        `;
+                        preview.appendChild(photoDiv);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        // Camera functionality
+        let cameraStream = null;
+
+        function openCamera() {
+            const cameraSection = document.getElementById('cameraSection');
+            const video = document.getElementById('cameraVideo');
+            
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    cameraStream = stream;
+                    video.srcObject = stream;
+                    cameraSection.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error accessing camera:', error);
+                    showStatusMessage('Unable to access camera', 'error');
+                });
+        }
+
+        function closeCamera() {
+            const cameraSection = document.getElementById('cameraSection');
+            const video = document.getElementById('cameraVideo');
+            
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            
+            video.srcObject = null;
+            cameraSection.style.display = 'none';
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.getElementById('cameraCanvas');
+            const preview = document.getElementById('photoPreview');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            
+            canvas.toBlob(blob => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoDiv = document.createElement('div');
+                    photoDiv.style.cssText = 'position: relative; border-radius: 8px; overflow: hidden;';
+                    photoDiv.innerHTML = `
+                        <img src="${e.target.result}" style="width: 100%; height: 150px; object-fit: cover;">
+                        <button type="button" onclick="this.parentElement.remove()" 
+                                style="position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.8); color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer;">×</button>
+                    `;
+                    preview.appendChild(photoDiv);
+                };
+                reader.readAsDataURL(blob);
+            }, 'image/jpeg', 0.8);
+            
+            closeCamera();
+        }
+
         // Load current photos
         function loadCurrentPhotos(plantId) {
             fetch(`get_plant_photos.php?plant_id=${plantId}`)
@@ -628,22 +754,48 @@
             
             const formData = new FormData(this);
             
-            // Add captured photos if any
+            // Handle uploaded photos from file input
+            const photoUpload = document.getElementById('photoUpload');
+            if (photoUpload.files.length > 0) {
+                for (let i = 0; i < photoUpload.files.length; i++) {
+                    formData.append('uploaded_photos[]', photoUpload.files[i]);
+                }
+            }
+            
+            // Handle captured photos from camera/preview
             const photoPreview = document.getElementById('photoPreview');
             const images = photoPreview.querySelectorAll('img');
             
-            images.forEach((img, index) => {
-                // Convert image to blob and add to form data
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;
-                ctx.drawImage(img, 0, 0);
-                
-                canvas.toBlob(blob => {
-                    formData.append('captured_photos[]', blob, `captured_${index}.jpg`);
-                }, 'image/jpeg', 0.8);
-            });
+            let capturedPhotosProcessed = 0;
+            const totalCapturedPhotos = images.length;
+            
+            if (totalCapturedPhotos === 0) {
+                // No captured photos, submit immediately
+                submitForm(formData);
+            } else {
+                // Process captured photos
+                images.forEach((img, index) => {
+                    // Convert image to blob and add to form data
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.naturalWidth;
+                    canvas.height = img.naturalHeight;
+                    ctx.drawImage(img, 0, 0);
+                    
+                    canvas.toBlob(blob => {
+                        formData.append('captured_photos[]', blob, `captured_${index}.jpg`);
+                        capturedPhotosProcessed++;
+                        
+                        // Submit when all photos are processed
+                        if (capturedPhotosProcessed === totalCapturedPhotos) {
+                            submitForm(formData);
+                        }
+                    }, 'image/jpeg', 0.8);
+                });
+            }
+        });
+
+        function submitForm(formData) {
             
             // Submit form
             fetch('handle_edit_plant.php', {
@@ -662,6 +814,67 @@
                 showStatusMessage('Error updating plant', 'error');
             });
         });
+
+        // Load photos when plant data is loaded
+        if (plantId) {
+            loadCurrentPhotos(plantId);
+        }
+
+        // Check for success/error messages
+        const successMessage = urlParams.get('success');
+        const errorMessage = urlParams.get('error');
+
+        if (successMessage) {
+            showStatusMessage(successMessage, 'success');
+        } else if (errorMessage) {
+            showStatusMessage(errorMessage, 'error');
+        }
+    </script>
+</body>
+</html>         
+   
+            // Submit form
+            fetch('handle_edit_plant.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'all_plants.php?success=' + encodeURIComponent('Plant updated successfully');
+                } else {
+                    throw new Error('Failed to update plant');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showStatusMessage('Error updating plant', 'error');
+            });
+        });
+
+        // Delete plant function
+        function deletePlant() {
+            if (confirm('Are you sure you want to permanently delete this plant? This action cannot be undone and will remove all associated data including photos and history.')) {
+                if (confirm('This will permanently delete the plant and all its data. Are you absolutely sure?')) {
+                    fetch('delete_plant.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `plant_id=${plantId}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = 'all_plants.php?success=' + encodeURIComponent('Plant deleted successfully');
+                        } else {
+                            showStatusMessage('Error: ' + data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showStatusMessage('Error deleting plant', 'error');
+                    });
+                }
+            }
+        }
 
         // Load photos when plant data is loaded
         if (plantId) {

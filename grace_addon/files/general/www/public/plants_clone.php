@@ -54,6 +54,19 @@
             </div>
         </div>
 
+        <!-- Batch Operations -->
+        <div class="modern-card" id="batchOperations" style="margin-bottom: 2rem; display: none;">
+            <h3>📦 Batch Operations</h3>
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: 1rem;">
+                <span id="selectedCount" style="color: var(--text-secondary);">0 plants selected</span>
+                <button onclick="selectAll()" class="modern-btn secondary">✅ Select All</button>
+                <button onclick="clearSelection()" class="modern-btn secondary">❌ Clear Selection</button>
+                <div style="border-left: 1px solid var(--border-color); height: 2rem; margin: 0 0.5rem;"></div>
+                <button onclick="batchMoveToVeg()" class="modern-btn">🌱 Move to Veg</button>
+                <button onclick="batchDestroy()" class="modern-btn secondary" style="color: var(--accent-error); border-color: var(--accent-error);">🗑️ Destroy Selected</button>
+            </div>
+        </div>
+
         <!-- Clone Plants Table -->
         <div class="modern-card">
             <h3>🌿 Your Clone Plants</h3>
@@ -61,6 +74,7 @@
                 <table id="clonesTable" class="modern-table">
                     <thead>
                         <tr>
+                            <th><input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()"></th>
                             <th>Tracking #</th>
                             <th>Tag</th>
                             <th>Genetics</th>
@@ -170,6 +184,7 @@
                 const motherInfo = plant.mother_plant_tag || (plant.mother_id ? `ID: ${plant.mother_id}` : 'Direct');
                 
                 row.innerHTML = `
+                    <td><input type="checkbox" class="plant-checkbox" value="${plant.id}" onchange="updateSelection()"></td>
                     <td><strong>${plant.tracking_number}</strong></td>
                     <td>${plant.plant_tag || '-'}</td>
                     <td>${plant.genetics_name || 'Unknown'}</td>
@@ -188,6 +203,8 @@
                 `;
                 tbody.appendChild(row);
             });
+            
+            updateSelection();
         }
 
         function moveToVeg(plantId) {
@@ -274,6 +291,139 @@
         document.getElementById('roomFilter').addEventListener('change', applyFilters);
         document.getElementById('geneticsFilter').addEventListener('change', applyFilters);
         document.getElementById('motherFilter').addEventListener('change', applyFilters);
+
+        // Batch operation functions
+        function updateSelection() {
+            const checkboxes = document.querySelectorAll('.plant-checkbox');
+            const checkedBoxes = document.querySelectorAll('.plant-checkbox:checked');
+            const batchOperations = document.getElementById('batchOperations');
+            const selectedCount = document.getElementById('selectedCount');
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            
+            selectedCount.textContent = `${checkedBoxes.length} plants selected`;
+            
+            if (checkedBoxes.length > 0) {
+                batchOperations.style.display = 'block';
+            } else {
+                batchOperations.style.display = 'none';
+            }
+            
+            // Update select all checkbox state
+            if (checkedBoxes.length === checkboxes.length && checkboxes.length > 0) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedBoxes.length > 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            }
+        }
+
+        function toggleSelectAll() {
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            const checkboxes = document.querySelectorAll('.plant-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+            
+            updateSelection();
+        }
+
+        function selectAll() {
+            const checkboxes = document.querySelectorAll('.plant-checkbox');
+            checkboxes.forEach(checkbox => checkbox.checked = true);
+            updateSelection();
+        }
+
+        function clearSelection() {
+            const checkboxes = document.querySelectorAll('.plant-checkbox');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+            updateSelection();
+        }
+
+        function getSelectedPlantIds() {
+            const checkedBoxes = document.querySelectorAll('.plant-checkbox:checked');
+            return Array.from(checkedBoxes).map(checkbox => checkbox.value);
+        }
+
+        function batchMoveToVeg() {
+            const selectedIds = getSelectedPlantIds();
+            if (selectedIds.length === 0) {
+                showStatusMessage('Please select plants to move', 'error');
+                return;
+            }
+
+            if (confirm(`Move ${selectedIds.length} selected plants to vegetative stage?`)) {
+                // Get available veg rooms
+                fetch('get_rooms_by_type.php?type=Veg')
+                    .then(response => response.json())
+                    .then(rooms => {
+                        if (rooms.length === 0) {
+                            showStatusMessage('No vegetative rooms available. Please create a Veg room first.', 'error');
+                            return;
+                        }
+                        
+                        // Use the first available veg room
+                        const targetRoom = rooms[0].id;
+                        
+                        const formData = new FormData();
+                        formData.append('plants', JSON.stringify(selectedIds));
+                        formData.append('target_stage', 'Veg');
+                        formData.append('target_room', targetRoom);
+                        formData.append('current_stage', 'Clone');
+                        
+                        fetch('move_plants.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showStatusMessage(`${selectedIds.length} plants moved to vegetative stage successfully`, 'success');
+                                loadClones();
+                            } else {
+                                showStatusMessage('Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showStatusMessage('Error moving plants', 'error');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading rooms:', error);
+                        showStatusMessage('Error loading rooms', 'error');
+                    });
+            }
+        }
+
+        function batchDestroy() {
+            const selectedIds = getSelectedPlantIds();
+            if (selectedIds.length === 0) {
+                showStatusMessage('Please select plants to destroy', 'error');
+                return;
+            }
+
+            if (confirm(`Are you sure you want to destroy ${selectedIds.length} selected plants? This action cannot be undone.`)) {
+                fetch('destroy_plants.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `plant_ids=${selectedIds.join(',')}`
+                })
+                .then(response => response.text())
+                .then(() => {
+                    showStatusMessage(`${selectedIds.length} plants destroyed successfully`, 'success');
+                    loadClones();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showStatusMessage('Error destroying plants', 'error');
+                });
+            }
+        }
 
         // Load data on page load
         loadClones();
