@@ -2,6 +2,39 @@
 
 All notable changes to the MediFlower Cultivation Tracker addon will be documented in this file.
 
+## [2.11.0] - 2025-01-19
+
+### 🔢 **Advanced Tracking Number System**
+- **Mother-Based Tracking**: Tracking numbers now start with mother plant ID (e.g., 5-01, 5-02, 5-03)
+- **Sequential Numbering**: Automatic sequential numbering for clones from each mother plant
+- **Multi-Mother Support**: Distribute clones between multiple mother plants with proper tracking
+- **Fallback System**: Standard CT-YYYY-XXXXXX format for non-clone plants
+
+### 👥 **Multi-Mother Clone Selection**
+- **Multiple Mother Selection**: Select multiple mother plants when adding clones
+- **Clone Distribution**: Specify how many clones to take from each mother plant
+- **Real-time Validation**: Live validation that clone distribution equals total plant count
+- **Visual Feedback**: Color-coded status indicators for distribution accuracy
+- **Dynamic Interface**: Add/remove mother plant selections as needed
+
+### 📅 **Enhanced Date Management**
+- **Custom Date Selection**: Choose the exact date when plants were added to the system
+- **Default Current Time**: Automatically defaults to current date and time
+- **Proper Date Handling**: Improved date formatting and storage in database
+- **Timeline Accuracy**: Better tracking of when plants actually entered the system
+
+### 🎨 **Improved User Interface**
+- **Professional Multi-Select**: Modern interface for selecting multiple mothers
+- **Distribution Status**: Real-time feedback on clone distribution
+- **Enhanced Validation**: Better form validation with helpful error messages
+- **Responsive Design**: Mobile-optimized multi-mother selection interface
+
+### 🔧 **Technical Improvements**
+- **Enhanced Tracking Generation**: New tracking number generation system with mother plant support
+- **Improved Database Handling**: Better data validation and error handling
+- **API Enhancements**: Updated mother plant API with debugging capabilities
+- **Form Processing**: Enhanced form processing for multi-mother selections
+
 ## [2.10.0] - 2025-01-19
 
 ### 🎨 **Enhanced Edit Plant Page**

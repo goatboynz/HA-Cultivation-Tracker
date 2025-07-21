@@ -797,4 +797,135 @@ ced Edit Plant Page Styles */
 .stage-mother {
     background: rgba(245, 158, 11, 0.2);
     color: #f59e0b;
+}/
+* Multi-Mother Selection Styles */
+.mother-selection-row {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 1rem;
+    align-items: end;
+    transition: all 0.2s ease;
+}
+
+.mother-selection-row:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+}
+
+.mother-selection-row label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.mother-selection-row select,
+.mother-selection-row input {
+    width: 100%;
+}
+
+.mother-count {
+    text-align: center;
+    font-weight: 600;
+}
+
+#cloneDistributionStatus {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    border: 2px solid;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#cloneDistributionStatus[style*="--accent-success"] {
+    border-color: var(--accent-success);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+#cloneDistributionStatus[style*="--accent-warning"] {
+    border-color: var(--accent-warning);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+#cloneDistributionStatus[style*="--accent-error"] {
+    border-color: var(--accent-error);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.add-mother-btn {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Date input styling */
+input[type="datetime-local"] {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+input[type="datetime-local"]:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* Tracking number display improvements */
+.tracking-number-display {
+    font-family: 'Courier New', monospace;
+    background: var(--bg-tertiary);
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+/* Source type specific styling */
+.source-type-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-card);
+}
+
+.source-type-section h4 {
+    margin: 0 0 1rem 0;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Animation for showing/hiding sections */
+.source-section {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.source-section.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.source-section.visible {
+    max-height: 1000px;
+    opacity: 1;
 }

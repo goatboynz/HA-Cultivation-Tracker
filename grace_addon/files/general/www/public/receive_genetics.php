@@ -33,26 +33,48 @@
                         <label for="sourceType">Source Type *</label>
                         <select id="sourceType" name="sourceType" required>
                             <option value="" disabled selected>Select Source</option>
-                            <option value="mother">From Mother Plant</option>
+                            <option value="mother">From Mother Plant(s)</option>
                             <option value="seed">From Seed Stock</option>
                             <option value="clone">Clone/Cutting</option>
                             <option value="purchased">Purchased Plants</option>
                         </select>
                     </div>
                     
-                    <div id="motherPlantGroup" style="display: none;">
-                        <label for="motherId">Mother Plant *</label>
-                        <select id="motherId" name="motherId">
-                            <option value="" disabled selected>Select Mother Plant</option>
-                        </select>
+                    <div>
+                        <label for="dateAdded">Date Added *</label>
+                        <input type="datetime-local" id="dateAdded" name="dateAdded" required>
+                        <small style="color: var(--text-secondary); font-size: 0.8rem;">When these plants were added to the system</small>
                     </div>
-                    
-                    <div id="seedStockGroup" style="display: none;">
-                        <label for="seedStockId">Seed Stock *</label>
-                        <select id="seedStockId" name="seedStockId">
-                            <option value="" disabled selected>Select Seed Stock</option>
-                        </select>
+                </div>
+                
+                <!-- Single Mother Plant Selection -->
+                <div id="singleMotherGroup" style="display: none; margin-top: 1rem;">
+                    <label for="motherId">Mother Plant *</label>
+                    <select id="motherId" name="motherId">
+                        <option value="" disabled selected>Select Mother Plant</option>
+                    </select>
+                </div>
+                
+                <!-- Multiple Mother Plant Selection -->
+                <div id="multiMotherGroup" style="display: none; margin-top: 1rem;">
+                    <label>Select Mother Plants and Clone Distribution *</label>
+                    <div id="motherSelectionContainer" style="margin-top: 0.5rem;">
+                        <!-- Mother plant selections will be added here -->
                     </div>
+                    <button type="button" id="addMotherBtn" class="modern-btn secondary" style="margin-top: 1rem;">
+                        ➕ Add Another Mother Plant
+                    </button>
+                    <small style="color: var(--text-secondary); font-size: 0.8rem; display: block; margin-top: 0.5rem;">
+                        Distribute clones between multiple mother plants. Total must equal the number of plants above.
+                    </small>
+                </div>
+                
+                <!-- Seed Stock Selection -->
+                <div id="seedStockGroup" style="display: none; margin-top: 1rem;">
+                    <label for="seedStockId">Seed Stock *</label>
+                    <select id="seedStockId" name="seedStockId">
+                        <option value="" disabled selected>Select Seed Stock</option>
+                    </select>
                 </div>
             </div>
 
@@ -182,19 +204,28 @@
             })
             .catch(error => console.error('Error fetching rooms:', error));
 
+        // Set default date to now
+        document.getElementById('dateAdded').value = new Date().toISOString().slice(0, 16);
+
         // Handle source type changes
         document.getElementById('sourceType').addEventListener('change', function() {
             const sourceType = this.value;
-            const motherGroup = document.getElementById('motherPlantGroup');
+            const singleMotherGroup = document.getElementById('singleMotherGroup');
+            const multiMotherGroup = document.getElementById('multiMotherGroup');
             const seedGroup = document.getElementById('seedStockGroup');
             
             // Hide all source-specific fields
-            motherGroup.style.display = 'none';
+            singleMotherGroup.style.display = 'none';
+            multiMotherGroup.style.display = 'none';
             seedGroup.style.display = 'none';
             
             // Show relevant fields based on source type
-            if (sourceType === 'mother' || sourceType === 'clone') {
-                motherGroup.style.display = 'block';
+            if (sourceType === 'mother') {
+                multiMotherGroup.style.display = 'block';
+                loadMotherPlants();
+                initializeMotherSelection();
+            } else if (sourceType === 'clone') {
+                singleMotherGroup.style.display = 'block';
                 loadMotherPlants();
             } else if (sourceType === 'seed') {
                 seedGroup.style.display = 'block';
@@ -202,21 +233,150 @@
             }
         });
 
+        // Multi-mother selection functionality
+        let motherPlantsList = [];
+        let motherSelectionCount = 0;
+
+        function initializeMotherSelection() {
+            const container = document.getElementById('motherSelectionContainer');
+            container.innerHTML = '';
+            motherSelectionCount = 0;
+            addMotherSelection();
+        }
+
+        function addMotherSelection() {
+            motherSelectionCount++;
+            const container = document.getElementById('motherSelectionContainer');
+            
+            const motherDiv = document.createElement('div');
+            motherDiv.className = 'mother-selection-row';
+            motherDiv.style.cssText = 'display: grid; grid-template-columns: 2fr 1fr auto; gap: 1rem; align-items: end; margin-bottom: 1rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px;';
+            
+            motherDiv.innerHTML = `
+                <div>
+                    <label>Mother Plant</label>
+                    <select name="motherIds[]" class="mother-select" required>
+                        <option value="" disabled selected>Select Mother Plant</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Number of Clones</label>
+                    <input type="number" name="motherCounts[]" class="mother-count" min="1" required placeholder="0" onchange="updateCloneDistribution()">
+                </div>
+                <div>
+                    ${motherSelectionCount > 1 ? '<button type="button" class="modern-btn secondary" onclick="removeMotherSelection(this)" style="background: var(--accent-error);">❌</button>' : ''}
+                </div>
+            `;
+            
+            container.appendChild(motherDiv);
+            
+            // Populate the new select with mother plants
+            const newSelect = motherDiv.querySelector('.mother-select');
+            motherPlantsList.forEach(mother => {
+                const option = document.createElement('option');
+                option.value = mother.id;
+                option.textContent = `${mother.genetics_name || 'Unknown'} - ${mother.plant_tag || mother.tracking_number || 'ID: ' + mother.id}`;
+                newSelect.appendChild(option);
+            });
+        }
+
+        function removeMotherSelection(button) {
+            button.closest('.mother-selection-row').remove();
+            updateCloneDistribution();
+        }
+
+        function updateCloneDistribution() {
+            const totalPlants = parseInt(document.getElementById('plantCount').value) || 0;
+            const motherCounts = document.querySelectorAll('.mother-count');
+            let totalAssigned = 0;
+            
+            motherCounts.forEach(input => {
+                totalAssigned += parseInt(input.value) || 0;
+            });
+            
+            const remaining = totalPlants - totalAssigned;
+            const statusDiv = document.getElementById('cloneDistributionStatus') || createDistributionStatus();
+            
+            if (remaining === 0) {
+                statusDiv.innerHTML = '<span style="color: var(--accent-success);">✅ All clones distributed correctly</span>';
+                statusDiv.style.color = 'var(--accent-success)';
+            } else if (remaining > 0) {
+                statusDiv.innerHTML = `<span style="color: var(--accent-warning);">⚠️ ${remaining} clones remaining to distribute</span>`;
+                statusDiv.style.color = 'var(--accent-warning)';
+            } else {
+                statusDiv.innerHTML = `<span style="color: var(--accent-error);">❌ Over-distributed by ${Math.abs(remaining)} clones</span>`;
+                statusDiv.style.color = 'var(--accent-error)';
+            }
+        }
+
+        function createDistributionStatus() {
+            const statusDiv = document.createElement('div');
+            statusDiv.id = 'cloneDistributionStatus';
+            statusDiv.style.cssText = 'margin-top: 1rem; padding: 0.5rem; border-radius: 4px; font-weight: 600;';
+            document.getElementById('multiMotherGroup').appendChild(statusDiv);
+            return statusDiv;
+        }
+
+        // Add event listener for add mother button
+        document.getElementById('addMotherBtn').addEventListener('click', addMotherSelection);
+
+        // Update distribution when plant count changes
+        document.getElementById('plantCount').addEventListener('change', updateCloneDistribution);
+
         // Load mother plants
         function loadMotherPlants() {
+            console.log('Loading mother plants...');
             fetch('get_mother_plants.php')
-                .then(response => response.json())
-                .then(mothers => {
-                    const select = document.getElementById('motherId');
-                    select.innerHTML = '<option value="" disabled selected>Select Mother Plant</option>';
-                    mothers.forEach(mother => {
-                        const option = document.createElement('option');
-                        option.value = mother.id;
-                        option.textContent = `${mother.genetics_name} - ${mother.plant_tag || 'ID: ' + mother.id}`;
-                        select.appendChild(option);
-                    });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
                 })
-                .catch(error => console.error('Error loading mother plants:', error));
+                .then(data => {
+                    console.log('Mother plants data:', data);
+                    
+                    // Handle the new debug format or old format
+                    const mothers = data.mothers || data;
+                    motherPlantsList = mothers; // Store for multi-select use
+                    
+                    // Populate single mother select
+                    const singleSelect = document.getElementById('motherId');
+                    if (singleSelect) {
+                        singleSelect.innerHTML = '<option value="" disabled selected>Select Mother Plant</option>';
+                        
+                        if (mothers.length === 0) {
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = 'No mother plants available';
+                            option.disabled = true;
+                            singleSelect.appendChild(option);
+                            console.log('No mother plants found');
+                            
+                            // Show debug info if available
+                            if (data.debug) {
+                                console.log('Debug info:', data.debug);
+                                showStatusMessage(data.debug.message, 'error');
+                            }
+                        } else {
+                            mothers.forEach(mother => {
+                                const option = document.createElement('option');
+                                option.value = mother.id;
+                                option.textContent = `${mother.genetics_name || 'Unknown'} - ${mother.plant_tag || mother.tracking_number || 'ID: ' + mother.id}`;
+                                singleSelect.appendChild(option);
+                            });
+                            console.log(`Added ${mothers.length} mother plants to dropdown`);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading mother plants:', error);
+                    const singleSelect = document.getElementById('motherId');
+                    if (singleSelect) {
+                        singleSelect.innerHTML = '<option value="" disabled selected>Error loading mother plants</option>';
+                    }
+                    showStatusMessage('Error loading mother plants: ' + error.message, 'error');
+                });
         }
 
         // Load seed stocks

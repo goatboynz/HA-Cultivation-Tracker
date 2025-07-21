@@ -7,7 +7,7 @@ try {
     
     // Get mother plants (plants marked as mothers OR plants in Mother stage)
     $sql = "SELECT p.id, p.plant_tag, p.tracking_number, g.name as genetics_name, r.name as room_name,
-                   p.growth_stage, p.is_mother
+                   p.growth_stage, p.is_mother, p.status
             FROM Plants p 
             LEFT JOIN Genetics g ON p.genetics_id = g.id 
             LEFT JOIN Rooms r ON p.room_id = r.id

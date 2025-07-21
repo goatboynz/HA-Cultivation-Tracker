@@ -24,9 +24,10 @@ try {
         $room = $roomStmt->fetch(PDO::FETCH_ASSOC);
         
         if ($genetics && $room) {
-            // Create a few test mother plants
+            // Create a few test mother plants with standard tracking numbers
             for ($i = 1; $i <= 3; $i++) {
-                $trackingNumber = 'MOTHER-' . str_pad($i, 6, '0', STR_PAD_LEFT);
+                $year = date('Y');
+                $trackingNumber = "CT-{$year}-MOTHER" . str_pad($i, 2, '0', STR_PAD_LEFT);
                 $plantTag = "Mother Plant $i";
                 
                 $sql = "INSERT INTO Plants (tracking_number, plant_tag, genetics_id, growth_stage, room_id, status, is_mother, date_created) 

@@ -425,7 +425,7 @@
     <footer style="text-align: center; padding: 2rem; margin-top: 3rem; border-top: 1px solid var(--border-color);">
         <p style="color: var(--text-secondary); margin: 0;">
             🌿 CultivationTracker - Professional Cannabis Management System<br>
-            <small>Version 2.10.0 | Built for compliance and efficiency</small>
+            <small>Version 2.11.0 | Built for compliance and efficiency</small>
         </p>
     </footer>
 
