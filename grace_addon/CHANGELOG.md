@@ -2,6 +2,49 @@
 
 All notable changes to the MediFlower Cultivation Tracker addon will be documented in this file.
 
+## [2.12.0] - 2025-01-19
+
+### 🔄 **Multi-Select Batch Operations**
+- **Clone Stage Management**: Select multiple clones with checkboxes for batch operations
+- **Batch Move to Veg**: Move multiple clones to vegetative stage simultaneously
+- **Batch Destruction**: Destroy multiple selected plants with single confirmation
+- **Vegetative Stage Operations**: Select multiple veg plants for batch processing
+- **Batch Move to Flower**: Move multiple veg plants to flowering stage
+- **Batch Mother Conversion**: Convert multiple veg plants to mother plants
+- **Visual Selection Interface**: Real-time selection counter and smart batch operation panel
+- **Select All/Clear**: Quick selection tools for efficient plant management
+
+### 🗑️ **Plant Deletion System**
+- **Delete Plant Button**: Added prominent delete button to Edit Plant page
+- **Double Confirmation**: Safety system with two confirmation dialogs
+- **Related Data Cleanup**: Automatically removes photos, batch records, and updates child plants
+- **Audit Trail**: Creates PlantDeletionLog for compliance and tracking
+- **Transaction Safety**: Database transactions ensure complete deletion or rollback
+- **Referential Integrity**: Properly handles mother-child plant relationships
+
+### 📸 **Enhanced Photo Management**
+- **Fixed Photo Uploads**: Resolved photo saving issues in edit plant form
+- **File Upload Support**: Multiple photo selection and upload functionality
+- **Camera Integration**: Take photos directly in browser with preview
+- **Photo Preview System**: View and remove photos before saving
+- **Current Photo Display**: Shows existing plant photos with date stamps
+- **Proper File Handling**: Photos saved to uploads/plants/ with database records
+- **Mobile Camera Support**: Works on mobile devices with camera access
+
+### 🎨 **User Interface Improvements**
+- **Batch Operations Panel**: Appears dynamically when plants are selected
+- **Selection Feedback**: Real-time counter showing number of selected plants
+- **Professional Styling**: Consistent modern design across all batch operations
+- **Mobile Responsive**: All batch operations work perfectly on mobile devices
+- **Visual Indicators**: Color-coded buttons and status messages for better UX
+
+### 🔧 **Technical Enhancements**
+- **Enhanced JavaScript**: Improved form handling and batch operation logic
+- **Better Error Handling**: Comprehensive error messages and user feedback
+- **Database Optimization**: Efficient batch processing with proper transactions
+- **API Improvements**: Enhanced endpoints for batch operations and photo handling
+- **Security Enhancements**: Proper validation and sanitization for all operations
+
 ## [2.11.0] - 2025-01-19
 
 ### 🔢 **Advanced Tracking Number System**

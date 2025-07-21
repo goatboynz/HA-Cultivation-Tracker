@@ -1,8 +1,8 @@
 name: "Cultivation Tracker"
-description: "Professional cannabis cultivation management system with advanced tracking numbers, multi-mother clone selection, custom date management, enhanced Edit Plant page, and comprehensive compliance reporting"
+description: "Professional cannabis cultivation management system with multi-select batch operations, plant deletion, photo uploads, advanced tracking numbers, multi-mother clone selection, and comprehensive compliance reporting"
 url: "https://github.com/goatboynz/HA-Cultivation-Tracker"
 codenotary: mediflower@cultivation-tracker.com
-version: "2.11.0"
+version: "2.12.0"
 slug: "mediflower_cultivation_tracker"
 panel_icon: mdi:cannabis
 init: false
